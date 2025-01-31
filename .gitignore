@@ -1,3 +1,2 @@
-target/
-target/classes/META-INF/persistence.xml
+#target/
 **/persistence.xml
