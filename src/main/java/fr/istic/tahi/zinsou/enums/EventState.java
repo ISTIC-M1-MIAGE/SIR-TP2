@@ -1,8 +1,8 @@
 package fr.istic.tahi.zinsou.enums;
 
-public enum EventStates {
+public enum EventState {
     CREATED,
-    VALIDATED,
     PUBLISHED,
+    VALIDATED,
     CANCELED
 }

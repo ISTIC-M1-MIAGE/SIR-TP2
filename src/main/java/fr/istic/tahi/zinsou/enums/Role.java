@@ -1,6 +1,6 @@
 package fr.istic.tahi.zinsou.enums;
 
-public enum Roles {
+public enum Role {
     ADMIN,
     USER
 }

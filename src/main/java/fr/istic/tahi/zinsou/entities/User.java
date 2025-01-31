@@ -1,6 +1,6 @@
 package fr.istic.tahi.zinsou.entities;
 
-import fr.istic.tahi.zinsou.enums.Roles;
+import fr.istic.tahi.zinsou.enums.Role;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -28,7 +28,7 @@ public class User implements Serializable {
     private String phone;
 
     @Column(name = "role", nullable = false)
-    private Roles role;
+    private Role role;
 
     @Column(name = "password", nullable = false)
     private String password;

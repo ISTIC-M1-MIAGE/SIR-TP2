@@ -1,6 +1,6 @@
 package fr.istic.tahi.zinsou.entities;
 
-import fr.istic.tahi.zinsou.enums.EventStates;
+import fr.istic.tahi.zinsou.enums.EventState;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -9,7 +9,7 @@ import java.util.List;
 
 
 @Entity
-@Table(name = "events")
+@Table(name = "event")
 public class Event implements Serializable {
 
     @Id
@@ -39,7 +39,7 @@ public class Event implements Serializable {
     private List<Pass> passes;
 
     @Column(name = "state", nullable = false)
-    private EventStates state;
+    private EventState state;
 
     @Column(name = "closing_ticket_office_date", nullable = false)
     private LocalDateTime closingTicketOfficeDate;
