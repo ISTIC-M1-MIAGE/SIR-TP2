@@ -1,4 +1,4 @@
-package fr.istic.tahi.zinsou.entities;
+package entities;
 
 import jakarta.persistence.*;
 
@@ -10,7 +10,7 @@ public class Payment implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private  long id;
+    private long id;
 
     @Column(name = "reference", nullable = false)
     private String reference;

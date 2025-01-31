@@ -1,4 +1,4 @@
-package fr.istic.tahi.zinsou.entities;
+package entities;
 
 import jakarta.persistence.*;
 

@@ -1,6 +1,6 @@
-package fr.istic.tahi.zinsou.entities;
+package entities;
 
-import fr.istic.tahi.zinsou.enums.Role;
+import enums.Role;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -45,7 +45,7 @@ public class User implements Serializable {
     @Column(name = "deleted_at")
     private LocalDateTime deletedAt;
 
-    public User(){
+    public User() {
 
     }
 

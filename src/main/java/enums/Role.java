@@ -1,4 +1,4 @@
-package fr.istic.tahi.zinsou.enums;
+package enums;
 
 public enum Role {
     ADMIN,

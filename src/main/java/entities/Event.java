@@ -1,6 +1,6 @@
-package fr.istic.tahi.zinsou.entities;
+package entities;
 
-import fr.istic.tahi.zinsou.enums.EventState;
+import enums.EventState;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -9,7 +9,7 @@ import java.util.List;
 
 
 @Entity
-@Table(name = "event")
+@Table(name = "events")
 public class Event implements Serializable {
 
     @Id
