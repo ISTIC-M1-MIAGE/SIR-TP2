@@ -25,11 +25,75 @@ public class Payment implements Serializable {
     private String message;
 
     @Column(name = "currency", nullable = false)
-    private String currency;
+    private String currency = "FR";
 
     @OneToOne(targetEntity = Reservation.class)
     private Reservation reservation;
 
     public Payment() {
+    }
+
+    public Payment(String reference, String status, double amount, String message, Reservation reservation) {
+        this.reference = reference;
+        this.status = status;
+        this.amount = amount;
+        this.message = message;
+        this.reservation = reservation;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getReference() {
+        return reference;
+    }
+
+    public void setReference(String reference) {
+        this.reference = reference;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public double getAmount() {
+        return amount;
+    }
+
+    public void setAmount(double amount) {
+        this.amount = amount;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public String getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
+    }
+
+    public Reservation getReservation() {
+        return reservation;
+    }
+
+    public void setReservation(Reservation reservation) {
+        this.reservation = reservation;
     }
 }

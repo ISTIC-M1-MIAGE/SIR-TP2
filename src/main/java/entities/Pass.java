@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -22,14 +23,14 @@ public class Pass implements Serializable {
     @Column(name = "price", nullable = false)
     private double price;
 
-    @Column(name = "advantages", nullable = false)
+    @Column(name = "advantages")
     private String advantages;
 
     @ManyToOne(targetEntity = Event.class)
     private Event event;
 
     @OneToMany(targetEntity = Reservation.class)
-    private List<Reservation> reservation;
+    private List<Reservation> reservation = new ArrayList<>();
 
     @Column(name = "old_price", nullable = false)
     private double oldPrice;
@@ -47,4 +48,89 @@ public class Pass implements Serializable {
     public Pass() {
     }
 
+    public Pass(String name, double price, Event event) {
+        this.name = name;
+        this.price = price;
+        this.event = event;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public String getAdvantages() {
+        return advantages;
+    }
+
+    public void setAdvantages(String advantages) {
+        this.advantages = advantages;
+    }
+
+    public Event getEvent() {
+        return event;
+    }
+
+    public void setEvent(Event event) {
+        this.event = event;
+    }
+
+    public List<Reservation> getReservation() {
+        return reservation;
+    }
+
+    public void setReservation(List<Reservation> reservation) {
+        this.reservation = reservation;
+    }
+
+    public double getOldPrice() {
+        return oldPrice;
+    }
+
+    public void setOldPrice(double oldPrice) {
+        this.oldPrice = oldPrice;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public LocalDateTime getDeletedAt() {
+        return deletedAt;
+    }
+
+    public void setDeletedAt(LocalDateTime deletedAt) {
+        this.deletedAt = deletedAt;
+    }
 }

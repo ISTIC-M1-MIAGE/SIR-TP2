@@ -1,7 +1,6 @@
 package jpa;
 
-import entities.Event;
-import entities.User;
+import entities.*;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
@@ -30,6 +29,18 @@ public class InitDB {
             Event e = new Event("event_" + i, "location_" + i, "description_" + i, LocalDateTime.now(), LocalDateTime.now(), u, "mainImage_" + i);
             manager.persist(e);
             u.getEvents().add(e);
+            for (int j = 1; j < 3; j++) {
+                Pass p = new Pass("pass_" + i + "_" + j, 10.0 * j, e);
+                manager.persist(p);
+                e.getPasses().add(p);
+                for (int k = 0; k < 2; k++) {
+                    Reservation r = new Reservation(u, p, LocalDateTime.now());
+                    manager.persist(r);
+                    p.getReservation().add(r);
+                    Payment pay = new Payment("Payment_" + k, "PENDING", 10.0, "Le Paiement", r);
+                    manager.persist(pay);
+                }
+            }
         }
         tx.commit();
 
