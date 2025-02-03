@@ -32,7 +32,8 @@ public class Reservation implements Serializable {
     @Column(name = "reservation_date")
     private LocalDateTime reservationDate;
 
-    private LocalDateTime createdAt;
+    @Column(name = "created_at", nullable = false)
+    private LocalDateTime createdAt = LocalDateTime.now();
 
     private LocalDateTime updatedAt;
 

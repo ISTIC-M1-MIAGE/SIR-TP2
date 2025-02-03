@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -32,29 +33,29 @@ public class Event implements Serializable {
     @Column(name = "end_date", nullable = false)
     private LocalDateTime endDate;
 
-    @OneToOne(targetEntity = User.class)
+    @ManyToOne(targetEntity = User.class)
     private User organizer;
 
     @OneToMany(targetEntity = Pass.class)
-    private List<Pass> passes;
+    private List<Pass> passes = new ArrayList<>();
 
     @Column(name = "state", nullable = false)
-    private EventState state;
+    private EventState state = EventState.CREATED;
 
-    @Column(name = "closing_ticket_office_date", nullable = false)
+    @Column(name = "closing_ticket_office_date")
     private LocalDateTime closingTicketOfficeDate;
 
     @Column(name = "main_image", nullable = false)
     private String mainImage;
 
     @Column(name = "currency", length = 10, nullable = false)
-    private String currency;
+    private String currency = "EUR";
 
     @Column(name = "country", nullable = false)
-    private String country;
+    private String country = "FR";
 
     @Column(name = "created_at", nullable = false)
-    private LocalDateTime createdAt;
+    private LocalDateTime createdAt = LocalDateTime.now();
 
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
@@ -64,5 +65,15 @@ public class Event implements Serializable {
 
 
     public Event() {
+    }
+
+    public Event(String title, String location, String description, LocalDateTime startDate, LocalDateTime endDate, User organizer, String mainImage) {
+        this.title = title;
+        this.location = location;
+        this.description = description;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.organizer = organizer;
+        this.mainImage = mainImage;
     }
 }
