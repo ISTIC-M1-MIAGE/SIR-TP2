@@ -36,7 +36,7 @@ public class Event implements Serializable {
     @ManyToOne(targetEntity = User.class)
     private User organizer;
 
-    @OneToMany(targetEntity = Pass.class)
+    @OneToMany(targetEntity = Pass.class, mappedBy = "event")
     private List<Pass> passes = new ArrayList<>();
 
     @Column(name = "state", nullable = false)

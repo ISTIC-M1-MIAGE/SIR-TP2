@@ -29,7 +29,7 @@ public class Pass implements Serializable {
     @ManyToOne(targetEntity = Event.class)
     private Event event;
 
-    @OneToMany(targetEntity = Reservation.class)
+    @OneToMany(targetEntity = Reservation.class, mappedBy = "pass")
     private List<Reservation> reservation = new ArrayList<>();
 
     @Column(name = "old_price", nullable = false)
