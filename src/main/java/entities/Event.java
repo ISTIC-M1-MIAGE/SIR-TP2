@@ -33,10 +33,10 @@ public class Event implements Serializable {
     @Column(name = "end_date", nullable = false)
     private LocalDateTime endDate;
 
-    @ManyToOne(targetEntity = User.class)
+    @ManyToOne(targetEntity = User.class, fetch = FetchType.LAZY)
     private User organizer;
 
-    @OneToMany(targetEntity = Pass.class, mappedBy = "event", cascade = CascadeType.REMOVE)
+    @OneToMany(targetEntity = Pass.class, mappedBy = "event", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
     private List<Pass> passes = new ArrayList<>();
 
     @Column(name = "state", nullable = false)

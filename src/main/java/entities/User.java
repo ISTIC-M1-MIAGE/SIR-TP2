@@ -37,7 +37,7 @@ public class User implements Serializable {
     @Column(name = "reset_token")
     private String resetToken;
 
-    @OneToMany(mappedBy = "organizer", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "organizer", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
     private List<Event> events = new ArrayList<>();
 
     @Column(name = "created_at", nullable = false)

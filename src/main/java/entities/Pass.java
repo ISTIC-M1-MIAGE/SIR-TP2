@@ -26,10 +26,10 @@ public class Pass implements Serializable {
     @Column(name = "advantages")
     private String advantages;
 
-    @ManyToOne(targetEntity = Event.class)
+    @ManyToOne(targetEntity = Event.class, fetch = FetchType.LAZY)
     private Event event;
 
-    @OneToMany(targetEntity = Reservation.class, mappedBy = "pass", cascade = CascadeType.REMOVE)
+    @OneToMany(targetEntity = Reservation.class, mappedBy = "pass", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
     private List<Reservation> reservation = new ArrayList<>();
 
     @Column(name = "old_price", nullable = false)

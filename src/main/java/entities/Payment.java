@@ -29,7 +29,7 @@ public class Payment implements Serializable {
     @Column(name = "currency", nullable = false)
     private String currency = "FR";
 
-    @OneToOne(targetEntity = Reservation.class)
+    @OneToOne(targetEntity = Reservation.class, fetch = FetchType.LAZY)
     private Reservation reservation;
 
     @Column(name = "created_at", nullable = false)
