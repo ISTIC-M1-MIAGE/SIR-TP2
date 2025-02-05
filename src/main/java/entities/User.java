@@ -37,6 +37,9 @@ public class User implements Serializable {
     @Column(name = "reset_token")
     private String resetToken;
 
+    @OneToMany(mappedBy = "organizer", cascade = CascadeType.REMOVE)
+    private List<Event> events = new ArrayList<>();
+
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
 
@@ -45,9 +48,6 @@ public class User implements Serializable {
 
     @Column(name = "deleted_at")
     private LocalDateTime deletedAt;
-
-    @OneToMany(mappedBy = "organizer")
-    private List<Event> events = new ArrayList<>();
 
     public User() {
 

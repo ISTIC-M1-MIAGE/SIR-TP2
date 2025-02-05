@@ -3,6 +3,7 @@ package entities;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "payments")
@@ -10,7 +11,8 @@ public class Payment implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    @Column(name = "id", nullable = false)
+    private Long id;
 
     @Column(name = "reference", nullable = false)
     private String reference;
@@ -29,6 +31,15 @@ public class Payment implements Serializable {
 
     @OneToOne(targetEntity = Reservation.class)
     private Reservation reservation;
+
+    @Column(name = "created_at", nullable = false)
+    private LocalDateTime createdAt = LocalDateTime.now();
+
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
+
+    @Column(name = "deleted_at")
+    private LocalDateTime deletedAt;
 
     public Payment() {
     }
@@ -95,5 +106,25 @@ public class Payment implements Serializable {
 
     public void setReservation(Reservation reservation) {
         this.reservation = reservation;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public LocalDateTime getDeletedAt() {
+        return deletedAt;
     }
 }

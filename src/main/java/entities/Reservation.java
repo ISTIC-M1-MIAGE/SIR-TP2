@@ -12,7 +12,8 @@ public class Reservation implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    @Column(name = "id", nullable = false)
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -34,8 +35,10 @@ public class Reservation implements Serializable {
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
 
+    @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
+    @Column(name = "deleted_at")
     private LocalDateTime deletedAt;
 
 
