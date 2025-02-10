@@ -204,4 +204,26 @@ public class Event implements Serializable {
     public void setDeletedAt(LocalDateTime deletedAt) {
         this.deletedAt = deletedAt;
     }
+
+    @Override
+    public String toString() {
+        return "\nEvent{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", location='" + location + '\'' +
+                ", description='" + description + '\'' +
+                ", startDate=" + startDate +
+                ", endDate=" + endDate +
+                ", organizer=" + organizer +
+                ", passes=" + passes +
+                ", state=" + state +
+                ", closingTicketOfficeDate=" + closingTicketOfficeDate +
+                ", mainImage='" + mainImage + '\'' +
+                ", currency='" + currency + '\'' +
+                ", country='" + country + '\'' +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                ", deletedAt=" + deletedAt +
+                '}';
+    }
 }

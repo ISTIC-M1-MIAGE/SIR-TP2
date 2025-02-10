@@ -122,4 +122,19 @@ public class Reservation implements Serializable {
     public void setDeletedAt(LocalDateTime deletedAt) {
         this.deletedAt = deletedAt;
     }
+
+    @Override
+    public String toString() {
+        return "\nReservation{" +
+                "id=" + id +
+                ", user=" + user +
+                ", pass=" + pass +
+                ", scanDate=" + scanDate +
+                ", state=" + state +
+                ", reservationDate=" + reservationDate +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                ", deletedAt=" + deletedAt +
+                '}';
+    }
 }

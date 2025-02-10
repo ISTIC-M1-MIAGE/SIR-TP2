@@ -127,4 +127,20 @@ public class Payment implements Serializable {
     public LocalDateTime getDeletedAt() {
         return deletedAt;
     }
+
+    @Override
+    public String toString() {
+        return "\nPayment{" +
+                "id=" + id +
+                ", reference='" + reference + '\'' +
+                ", status='" + status + '\'' +
+                ", amount=" + amount +
+                ", message='" + message + '\'' +
+                ", currency='" + currency + '\'' +
+                ", reservation=" + reservation +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                ", deletedAt=" + deletedAt +
+                '}';
+    }
 }

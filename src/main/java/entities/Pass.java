@@ -133,4 +133,20 @@ public class Pass implements Serializable {
     public void setDeletedAt(LocalDateTime deletedAt) {
         this.deletedAt = deletedAt;
     }
+
+    @Override
+    public String toString() {
+        return "\nPass{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", price=" + price +
+                ", advantages='" + advantages + '\'' +
+                ", event=" + event +
+                ", reservation=" + reservation +
+                ", oldPrice=" + oldPrice +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                ", deletedAt=" + deletedAt +
+                '}';
+    }
 }
