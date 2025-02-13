@@ -22,4 +22,15 @@ public class EventDAO extends AbstractJpaDao<Long, Event> {
     }
 
 
+    /**
+     * Retrieves a list of events by search criteria.
+     *
+     * @return List<Event>.
+     */
+    public List<Event> findBySearchCriteria(String searchCriteria) {
+        String query = "SELECT e FROM Event e WHERE e.title LIKE :searchCriteria";
+        return entityManager.createQuery(query, Event.class).setParameter("searchCriteria", searchCriteria).getResultList();
+    }
+
+
 }

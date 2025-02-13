@@ -4,6 +4,7 @@ import enums.PurchaseStateEnum;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -30,7 +31,7 @@ public class Reservation implements Serializable {
     private PurchaseStateEnum state = PurchaseStateEnum.PENDING;
 
     @Column(name = "reservation_date")
-    private LocalDateTime reservationDate;
+    private LocalDate reservationDate;
 
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
@@ -45,7 +46,7 @@ public class Reservation implements Serializable {
     public Reservation() {
     }
 
-    public Reservation(User user, Pass pass, LocalDateTime reservationDate) {
+    public Reservation(User user, Pass pass, LocalDate reservationDate) {
         this.user = user;
         this.pass = pass;
         this.reservationDate = reservationDate;
@@ -91,11 +92,11 @@ public class Reservation implements Serializable {
         this.state = state;
     }
 
-    public LocalDateTime getReservationDate() {
+    public LocalDate getReservationDate() {
         return reservationDate;
     }
 
-    public void setReservationDate(LocalDateTime reservationDate) {
+    public void setReservationDate(LocalDate reservationDate) {
         this.reservationDate = reservationDate;
     }
 

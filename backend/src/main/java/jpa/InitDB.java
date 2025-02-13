@@ -34,7 +34,7 @@ public class InitDB {
                 for (int k = 0; k < 2; k++) {
                     Reservation r = new Reservation(u, p, LocalDateTime.now());
                     manager.persist(r);
-                    p.getReservation().add(r);
+                    p.getReservations().add(r);
                     Payment pay = new Payment("Payment_" + k, "PENDING", 10.0, "Le Paiement", r);
                     manager.persist(pay);
                 }

@@ -94,7 +94,7 @@ public class Pass implements Serializable {
         this.event = event;
     }
 
-    public List<Reservation> getReservation() {
+    public List<Reservation> getReservations() {
         return reservation;
     }
 
