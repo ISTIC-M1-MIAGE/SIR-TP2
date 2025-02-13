@@ -7,9 +7,9 @@
 
 		<properties>
 			<property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver" /> <!-- DB Driver -->
-			<property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost/dbName" /> <!-- BD Mane -->
-			<property name="javax.persistence.jdbc.user" value="admin" /> <!-- DB User -->
-			<property name="javax.persistence.jdbc.password" value="Ismo100-8_Num27" /> <!-- DB Password -->
+			<property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost/dbName" /> <!-- BD Name -->
+			<property name="javax.persistence.jdbc.user" value="dbUser" /> <!-- DB User -->
+			<property name="javax.persistence.jdbc.password" value="dbPassword" /> <!-- DB Password -->
 
 			<property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/> <!-- DB Dialect -->
 			<property name="hibernate.hbm2ddl.auto" value="create" /> <!-- create / create-drop / update -->
