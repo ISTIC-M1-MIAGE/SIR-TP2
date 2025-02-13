@@ -21,6 +21,7 @@ public class InitDB {
         User u = new User("test", "test", "test@gmail.com", "passwordTest");
         Admin a = new Admin("admin", "admin", "admin@gmail.com", "passwordAdmin");
         manager.persist(u);
+        User created = manager.find(User.class, 1);
         manager.persist(a);
         for (int i = 0; i < 2; i++) {
             Event e = new Event("event_" + i, "location_" + i, "description_" + i, LocalDateTime.now(), LocalDateTime.now(), u, "mainImage_" + i);

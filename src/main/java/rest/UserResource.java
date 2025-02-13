@@ -1,33 +1,36 @@
 package rest;
 
+import dao.UserDAO;
 import entities.User;
 import io.swagger.v3.oas.annotations.Parameter;
 import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
 @Path("user")
-@Produces({"application/json", "application/xml"})
+@Produces({"application/json"})
 public class UserResource {
+
+    private UserDAO userDAO = new UserDAO();
 
     @GET
     @Path("/{userId}")
-    public User getUserById(@PathParam("userId") Long userId) {
-        // return pet
-        return new User();
-    }
-
-    @GET
-    @Path("/")
-    public User getPet(Long userId) {
-        return new User();
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getUserById(@PathParam("userId") Long userId) {
+        User user = userDAO.findOne(userId);
+        if (user == null) {
+            return Response.status(Response.Status.NOT_FOUND).entity("User not found").build();
+        }
+        return Response.ok().entity(user).build();
     }
 
 
     @POST
     @Consumes("application/json")
     public Response addPet(
-            @Parameter(description = "Pet object that needs to be added to the store", required = true) User user) {
-        // add pet
-        return Response.ok().entity("SUCCESS").build();
+            @Parameter(description = "User object that needs to be added to the store", required = true) User user) {
+        // add user
+        userDAO.save(user);
+        return Response.status(Response.Status.CREATED).entity("User created").build();
     }
 }
