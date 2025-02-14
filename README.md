@@ -57,7 +57,16 @@ D'abord, vous devez recréer le fichier **persistence.xml** à partir du templat
 Une fois que c'est fait, vous devez maintenant exécuter la classe [InitDB](backend/src/main/java/jpa/InitDB.java) pour
 charger nos entités dans la base de données que vous aurez spécifié dans le fichier **persistence.xml**.
 
-### 3. Démarrage de l'API REST
+### 3. Démarrage du servlet avec jetty
 
 ...
+
+jetty run
+
+### 4. Démarrage de l'API REST
+
+...
+
+Une fois que c'est fait, vous devez maintenant exécuter la classe [InitDB](backend/src/main/java/jpa/InitDB.java) pour
+charger nos entités dans la base de données que vous aurez spécifié dans le fichier **persistence.xml**.
 
