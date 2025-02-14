@@ -15,6 +15,21 @@ Dans notre projet, vous pourrez retrouver les dossiers suivants :
 - **modelling** : Dossier contenant les fichiers de modélisation (diagrammes UML)
 - **backend** : Dossier qui contient le code source et les fichiers utiles pour faire tourner notre backend
 
+### 2. Etat d'avancement dans les TPs
+
+Voici une petite checklist que nous avons préparée pour suivre notre propre avancement :
+
+- [x] TP1 - Introduction à la gestion de dépendances, de versions, et de l'intégration continue
+- [x] TP2-4 - A la découverte de JPA
+- [x] TP5 - Des servlets aux services Web
+- [ ] TP6 - Créer une application Adu pattern MVC en vanilla JS
+- [ ] TP7 - Angular
+- [ ] TP8 (Optionnel) - Vue JS
+- [ ] TP9 (Optionnel) - React
+- [ ] TP10 - Intégration frontend/backend
+- [ ] TP11 (Optionnel) - Déploiement sur VM
+- [ ] TP12 (Optionnel) - Docker
+
 ## Comment démarrer le projet ?
 
 ### 1. Chargement du projet maven et ses dépendances
@@ -31,7 +46,7 @@ mvn compile
 
 Nous avons décidé de supprimer le fichier **persistence.xml** qui se trouvait dans les ressources du backend car il
 contenait nos accès à la BD.
-Par contre, nous avons créé un template, le fichier **persistence.xml.example** pour conserver la structure de base.
+Par contre, nous avons créé un template, le fichier **persistence.xml.example**, pour conserver la structure de base.
 
 D'abord, vous devez recréer le fichier **persistence.xml** à partir du template et modifier les éléments suivants :
 
@@ -41,3 +56,8 @@ D'abord, vous devez recréer le fichier **persistence.xml** à partir du templat
 
 Une fois que c'est fait, vous devez maintenant exécuter la classe [InitDB](backend/src/main/java/jpa/InitDB.java) pour
 charger nos entités dans la base de données que vous aurez spécifié dans le fichier **persistence.xml**.
+
+### 3. Démarrage de l'API REST
+
+...
+
