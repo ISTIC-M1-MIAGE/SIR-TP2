@@ -1,4 +1,4 @@
-package rest;
+package rest.resources;
 
 import dao.UserDAO;
 import entities.User;

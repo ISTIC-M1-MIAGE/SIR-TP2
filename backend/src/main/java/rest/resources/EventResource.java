@@ -1,4 +1,4 @@
-package rest;
+package rest.resources;
 
 public class EventResource {
 }

@@ -32,12 +32,14 @@
         <!-- === SERVLET === -->
 
         <!-- TODO: Décommenter la dépendance ci dessous et refaire un build si on veut utiliser le servlet -->
+        <!--
         <dependency>
             <groupId>jakarta.servlet</groupId>
             <artifactId>jakarta.servlet-api</artifactId>
             <version>6.1.0</version>
             <scope>provided</scope>
         </dependency>
+        -->
 
         <!-- === API REST === -->
 

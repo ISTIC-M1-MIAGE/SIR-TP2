@@ -59,16 +59,30 @@ charger nos entités dans la base de données que vous aurez spécifié dans le 
 
 ### 3. Démarrage du servlet avec jetty
 
-Après avoir chargé notre base de données sur votre machine, vous pouvez lancer le servlet avec la commande ci-dessous :
+Nous avons remarqué que les dépendances pour le servlet et celles pour l'API REST empêchent l'application de build
+correctement lorsque qu'elles cohabitent. Nous avons donc mis en commentaire les dépendances pour le servlet et il faut
+penser à les décommenter dans le fichier [pom.xml](backend/pom.xml) avant de pouvoir lancer le servlet.
+
+Après cette étape et après avoir chargé notre base de données sur votre machine, vous pouvez lancer le servlet avec la
+commande ci-dessous :
 
 ```
 mvn jetty:run
 ```
 
+Le serveur démarre à l'adresse http://localhost:8080/
+
+Pour tester, on peut accéder au formulaire de création d'un utilisateur via l'url http://localhost:8080/user/create.html
+
 ### 4. Démarrage de l'API REST
 
-...
+Pour démarrer l'API, il suffit de lancer la classe [RestServer](backend/src/main/java/rest/RestServer.java)
 
-Une fois que c'est fait, vous devez maintenant exécuter la classe [InitDB](backend/src/main/java/jpa/InitDB.java) pour
-charger nos entités dans la base de données que vous aurez spécifié dans le fichier **persistence.xml**.
+Une fois le serveur lancé, vous pouvez utiliser un client comme Postman avec l'url http://localhost:8080/ comme
+effectuer des requêtes.
+
+Ci-dessous la liste des endpoints disponibles :
+
+### 5. Documentation swagger
+
 

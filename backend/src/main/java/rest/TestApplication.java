@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package jaxrs;
+package rest;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -27,8 +27,8 @@ import jakarta.ws.rs.ApplicationPath;
 import jakarta.ws.rs.core.Application;
 import jakarta.ws.rs.ext.ContextResolver;
 import jakarta.ws.rs.ext.Provider;
-import rest.SwaggerResource;
-import rest.UserResource;
+import rest.resources.SwaggerResource;
+import rest.resources.UserResource;
 
 @ApplicationPath("/")
 public class TestApplication extends Application {
