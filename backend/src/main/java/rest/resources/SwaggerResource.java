@@ -10,7 +10,7 @@ import java.nio.file.Files;
 import java.util.logging.Logger;
 
 
-@Path("/api")
+@Path("/swagger")
 public class SwaggerResource {
 
     private static final Logger logger = Logger.getLogger(SwaggerResource.class.getName());

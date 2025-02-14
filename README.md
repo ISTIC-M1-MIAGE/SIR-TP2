@@ -81,8 +81,15 @@ Pour démarrer l'API, il suffit de lancer la classe [RestServer](backend/src/mai
 Une fois le serveur lancé, vous pouvez utiliser un client comme Postman avec l'url http://localhost:8080/ comme
 effectuer des requêtes.
 
-Ci-dessous la liste des endpoints disponibles :
+Retrouver la liste des endpoints dans la prochaine section grâce à notre intégration de swagger.
 
 ### 5. Documentation swagger
 
+Lorsque l'API REST est lancée, il suffit d'aller à l'url http://localhost:8080/swagger/ pour voir s'afficher la
+documentation.
 
+## Les prochaines étapes
+
+- Compléter nos DAOs avec des fonctions utiles pour le front
+- Rajouter des DTOs
+- Travailler sur la partie front
