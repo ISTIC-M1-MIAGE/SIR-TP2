@@ -59,9 +59,11 @@ charger nos entités dans la base de données que vous aurez spécifié dans le 
 
 ### 3. Démarrage du servlet avec jetty
 
-...
+Après avoir chargé notre base de données sur votre machine, vous pouvez lancer le servlet avec la commande ci-dessous :
 
-jetty run
+```
+mvn jetty:run
+```
 
 ### 4. Démarrage de l'API REST
 

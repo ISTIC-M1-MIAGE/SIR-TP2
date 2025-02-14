@@ -6,6 +6,7 @@ import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.Persistence;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class InitDB {
@@ -32,7 +33,7 @@ public class InitDB {
                 manager.persist(p);
                 e.getPasses().add(p);
                 for (int k = 0; k < 2; k++) {
-                    Reservation r = new Reservation(u, p, LocalDateTime.now());
+                    Reservation r = new Reservation(u, p, LocalDate.now());
                     manager.persist(r);
                     p.getReservations().add(r);
                     Payment pay = new Payment("Payment_" + k, "PENDING", 10.0, "Le Paiement", r);
