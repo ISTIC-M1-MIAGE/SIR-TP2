@@ -1,9 +1,13 @@
-import Image from "next/image";
+'use client'
+
+import {Button} from "@heroui/react";
 
 export default function Page() {
     return (
-        <div>
-
+        <div className={"flex flex-col"}>
+            <Button>
+                Click me
+            </Button>
         </div>
     );
 }
