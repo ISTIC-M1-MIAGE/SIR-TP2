@@ -5,7 +5,7 @@ import LucideIcon from "@/components/LucideIcon";
 
 export function EventCard() {
     return (
-        <Card isFooterBlurred className="min-w-full w-full">
+        <Card isFooterBlurred className="min-w-full w-full h-80">
             <CardHeader className="absolute z-10 top-0 flex-row justify-between items-start">
                 <div className={"bg-white rounded-lg px-3 py-1.5"}>
                     <small className="font-bold">FREE</small>
