@@ -1,13 +1,9 @@
 'use client';
 
-import {Button} from "@heroui/react";
+import EventGrid from "@/components/layouts/EventGrid";
 
 export default function Page() {
     return (
-        <div className={"max-w-1/3 flex flex-col  p-3 bg-amber-50 rounded-2xl"}>
-            <p>Test</p>
-
-            <Button color="primary">Button</Button>
-        </div>
+        <EventGrid events={[1, 2, 3, 4, 5]}/>
     );
 }
