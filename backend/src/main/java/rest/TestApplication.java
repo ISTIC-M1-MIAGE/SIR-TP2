@@ -27,6 +27,7 @@ import jakarta.ws.rs.ApplicationPath;
 import jakarta.ws.rs.core.Application;
 import jakarta.ws.rs.ext.ContextResolver;
 import jakarta.ws.rs.ext.Provider;
+import rest.resources.EventResource;
 import rest.resources.SwaggerResource;
 import rest.resources.UserResource;
 
@@ -58,6 +59,7 @@ public class TestApplication extends Application {
 
         clazzes.add(OpenApiResource.class);
         clazzes.add(UserResource.class);
+        clazzes.add(EventResource.class);
         clazzes.add(SwaggerResource.class);
 //        clazzes.add(AcceptHeaderOpenApiResource.class);
 

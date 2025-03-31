@@ -27,10 +27,11 @@ public class UserResource {
 
     @POST
     @Consumes("application/json")
-    public Response addPet(
+    public Response addUser(
             @Parameter(description = "User object that needs to be added to the store", required = true) User user) {
         // add user
         userDAO.save(user);
         return Response.status(Response.Status.CREATED).entity("User created").build();
     }
 }
+
