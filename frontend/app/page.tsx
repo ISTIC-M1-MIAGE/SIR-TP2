@@ -19,11 +19,13 @@ export default function Page() {
 
     return (
         <div className="w-full h-full flex flex-col items-center justify-center">
-            <div className={"w-10/12 h-96 flex flex-col"}>
-                <CustomCarousel/>
+            <div className="w-10/12 h-96 relative flex flex-col items-center justify-center">
+                <div className="absolute w-2/3 inset-y-full flex items-center z-10">
+                    <HomeSearchWidget/>
+                </div>
+                    <CustomCarousel/>
             </div>
-            <div className="w-10/12 h-full flex flex-col items-center justify-center">
-                <HomeSearchWidget/>
+            <div className="mt-32 w-10/12 h-full flex flex-col items-center justify-center">
                 <EventGrid events={[1, 2, 3, 4, 5]}/>
             </div>
         </div>

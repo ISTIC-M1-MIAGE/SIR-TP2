@@ -20,10 +20,16 @@ export function EventCard() {
                 className="z-0 w-full h-full scale-125 -translate-y-6 object-cover"
                 src="https://heroui.com/images/card-example-6.jpeg"
             />
-            <CardFooter className="z-10 absolute bottom-0 bg-white/50 border-t-1 border-zinc-100/50 justify-between">
-                <div>
-                    <h4 className="text-black text-xl font-bold">Evènement de la journée</h4>
-                    <p className="text-black text-tiny">Available soon.</p>
+            <CardFooter className="z-10 absolute bottom-0 bg-white border-t-1 border-zinc-100/50 justify-between">
+                <div className="flex flex-row">
+                    <div className="m-3 flex-col flex items-center justify-start">
+                        <h3 className="text-secondary">SEP</h3>
+                        <h5 className="text-xl font-bold">13</h5>
+                    </div>
+                    <div>
+                        <h4 className="text-black text-large font-bold">Evènement de la journée</h4>
+                        <p className="text-black text-tiny">Available soon.</p>
+                    </div>
                 </div>
             </CardFooter>
         </Card>
