@@ -1,6 +1,7 @@
 package rest.resources;
 
 import dao.EventDAO;
+import dto.EventDTOout;
 import entities.Event;
 import io.swagger.v3.oas.annotations.Parameter;
 import jakarta.ws.rs.*;
@@ -19,8 +20,7 @@ public class EventResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getEvents() {
         List<Event> events = eventDAO.findAll();
-        System.out.println("events: " + events);
-        return Response.ok().entity(events).build();
+        return Response.ok().entity(EventDTOout.convertEventsToDTOout(events)).build();
     }
 
     @POST

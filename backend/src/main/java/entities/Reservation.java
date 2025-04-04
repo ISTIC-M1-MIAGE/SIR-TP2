@@ -133,9 +133,9 @@ public class Reservation implements Serializable {
                 ", scanDate=" + scanDate +
                 ", state=" + state +
                 ", reservationDate=" + reservationDate +
-                ", createdAt=" + createdAt +
-                ", updatedAt=" + updatedAt +
-                ", deletedAt=" + deletedAt +
+                ", createdAt=" + createdAt.toString() +
+                ", updatedAt=" + updatedAt.toString() +
+                ", deletedAt=" + deletedAt.toString() +
                 '}';
     }
 }

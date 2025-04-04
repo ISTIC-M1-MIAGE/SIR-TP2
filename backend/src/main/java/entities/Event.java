@@ -212,18 +212,18 @@ public class Event implements Serializable {
                 ", title='" + title + '\'' +
                 ", location='" + location + '\'' +
                 ", description='" + description + '\'' +
-                ", startDate=" + startDate +
-                ", endDate=" + endDate +
-                ", organizer=" + organizer +
+                ", startDate=" + startDate.toString() +
+                ", endDate=" + endDate.toString() +
+                ", organizer=" + organizer.toString() +
                 ", passes=" + passes +
                 ", state=" + state +
                 ", closingTicketOfficeDate=" + closingTicketOfficeDate +
                 ", mainImage='" + mainImage + '\'' +
                 ", currency='" + currency + '\'' +
                 ", country='" + country + '\'' +
-                ", createdAt=" + createdAt +
-                ", updatedAt=" + updatedAt +
-                ", deletedAt=" + deletedAt +
+                ", createdAt=" + createdAt.toString() +
+                ", updatedAt=" + updatedAt.toString() +
+                ", deletedAt=" + deletedAt.toString() +
                 '}';
     }
 }

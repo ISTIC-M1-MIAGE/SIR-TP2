@@ -47,18 +47,18 @@ class ApiClient {
 
     async getEvents(token: string): Promise<AxiosResponse> {
         try {
-            const response = await axios.get(`${this.host}/utilisateur`, {
+            const response = await axios.get(`${this.host}/event`, {
                 headers: {
-                    Authorization: `Bearer ${token}`,
+                    //Authorization: `Bearer ${token}`,
                     'Content-Type': 'application/json',
                 },
                 timeout: this.defaultTimeout,
             });
 
-            console.debug("getUserInfos response =", response.data);
+            console.debug("getEvents response =", response.data);
             return response;
         } catch (error) {
-            console.error("getUserInfos error =", error);
+            console.error("getEvents error =", error);
             return this.serverErrorResponse;
         }
     }

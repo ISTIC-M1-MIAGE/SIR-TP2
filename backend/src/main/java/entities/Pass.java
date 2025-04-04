@@ -144,9 +144,9 @@ public class Pass implements Serializable {
                 ", event=" + event +
                 ", reservation=" + reservation +
                 ", oldPrice=" + oldPrice +
-                ", createdAt=" + createdAt +
-                ", updatedAt=" + updatedAt +
-                ", deletedAt=" + deletedAt +
+                ", createdAt=" + createdAt.toString() +
+                ", updatedAt=" + updatedAt.toString() +
+                ", deletedAt=" + deletedAt.toString() +
                 '}';
     }
 }

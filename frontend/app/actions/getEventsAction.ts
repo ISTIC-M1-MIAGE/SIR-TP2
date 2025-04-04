@@ -24,13 +24,8 @@ export async function getEventsAction(token: string) {
 
     switch (response.status) {
         case HttpStatusCode.Ok:
-            if (response.data.role != validatedFields.data.token.toUpperCase()) {
-                // Return not found response
-                return ActionHelper.notFoundResponse({title: "Aucun utilisateur n'a été trouvé"});
-            }
-
             // Return success response
-            return ActionHelper.successResponse({title: "Les informations de l'utilisateur ont bien été récupérées"}, response.data);
+            return ActionHelper.successResponse({title: "Les évènements ont bien été récupérées"}, response.data);
         default: // case HttpStatusCode.Forbidden:
             return ActionHelper.defaultResponse({title: response.data.message});
     }

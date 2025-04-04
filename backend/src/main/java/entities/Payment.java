@@ -138,9 +138,9 @@ public class Payment implements Serializable {
                 ", message='" + message + '\'' +
                 ", currency='" + currency + '\'' +
                 ", reservation=" + reservation +
-                ", createdAt=" + createdAt +
-                ", updatedAt=" + updatedAt +
-                ", deletedAt=" + deletedAt +
+                ", createdAt=" + createdAt.toString() +
+                ", updatedAt=" + updatedAt.toString() +
+                ", deletedAt=" + deletedAt.toString() +
                 '}';
     }
 }

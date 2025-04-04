@@ -7,13 +7,13 @@ import {useEffect, useState} from "react";
 import {getEventsAction} from "@/app/actions/getEventsAction";
 
 export default function Page() {
-    const [events, setEvents] = useState<any[]>([]);
+    const [events, setEvents] = useState<Event[]>([]);
 
     useEffect(() => {
         getEventsAction("test")
             .then(response => {
                 console.log('getInfosAction = ', response)
-                setEvents(response.data)
+                setEvents(response.data.map((event: Event) => ({...event})))
             })
     }, [false])
 
@@ -26,7 +26,7 @@ export default function Page() {
                     <CustomCarousel/>
             </div>
             <div className="mt-32 w-10/12 h-full flex flex-col items-center justify-center">
-                <EventGrid events={[1, 2, 3, 4, 5]}/>
+                <EventGrid events={events}/>
             </div>
         </div>
 

@@ -159,9 +159,9 @@ public class User implements Serializable {
                 ", password='" + password + '\'' +
                 ", resetToken='" + resetToken + '\'' +
                 ", events=" + events +
-                ", createdAt=" + createdAt +
-                ", updatedAt=" + updatedAt +
-                ", deletedAt=" + deletedAt +
+                ", createdAt=" + createdAt.toString() +
+                ", updatedAt=" + updatedAt.toString() +
+                ", deletedAt=" + deletedAt.toString() +
                 '}';
     }
 }
