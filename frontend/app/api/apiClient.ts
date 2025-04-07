@@ -1,7 +1,7 @@
 import axios, {AxiosResponse, HttpStatusCode} from 'axios';
 
 class ApiClient {
-    private readonly host = "http://localhost:8080";
+    private readonly host = "http://127.0.0.1:8080";
     private readonly defaultTimeout = 5000;
     private readonly serverErrorResponse = {
         status: 500,
@@ -45,11 +45,10 @@ class ApiClient {
         }
     }
 
-    async getEvents(token: string): Promise<AxiosResponse> {
+    async getEvents(): Promise<AxiosResponse> {
         try {
             const response = await axios.get(`${this.host}/event`, {
                 headers: {
-                    //Authorization: `Bearer ${token}`,
                     'Content-Type': 'application/json',
                 },
                 timeout: this.defaultTimeout,
@@ -58,7 +57,7 @@ class ApiClient {
             console.debug("getEvents response =", response.data);
             return response;
         } catch (error) {
-            console.error("getEvents error =", error);
+            console.log("getEvents error =", error);
             return this.serverErrorResponse;
         }
     }

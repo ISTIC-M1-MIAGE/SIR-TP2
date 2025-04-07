@@ -4,7 +4,7 @@ import {Button, Card, CardFooter, CardHeader, Image} from "@heroui/react";
 import LucideIcon from "@/components/LucideIcon";
 
 interface Props {
-    event: Event;
+    event: any;
 }
 export default function EventCard(props: Props) {
     return (

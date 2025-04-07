@@ -7,13 +7,13 @@ import {useEffect, useState} from "react";
 import {getEventsAction} from "@/app/actions/getEventsAction";
 
 export default function Page() {
-    const [events, setEvents] = useState<Event[]>([]);
+    const [events, setEvents] = useState([]);
 
     useEffect(() => {
-        getEventsAction("test")
+        getEventsAction()
             .then(response => {
                 console.log('getInfosAction = ', response)
-                setEvents(response.data.map((event: Event) => ({...event})))
+                setEvents(response.data)
             })
     }, [false])
 

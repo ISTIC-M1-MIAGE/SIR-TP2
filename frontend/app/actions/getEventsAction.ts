@@ -10,17 +10,17 @@ const Schema = z.object({
     token: z.string({message: "Le token d'authentification est requis"}),
 })
 
-export async function getEventsAction(token: string) {
+export async function getEventsAction() {
     // Validate the form data
-    const validatedFields = Schema.safeParse({token})
+    //const validatedFields = Schema.safeParse({token})
 
     // Handle validation errors
-    if (!validatedFields.success) {
-        return ActionHelper.invalidFieldsResponse(validatedFields.error.flatten().fieldErrors)
-    }
+    //if (!validatedFields.success) {
+      //  return ActionHelper.invalidFieldsResponse(validatedFields.error.flatten().fieldErrors)
+    //}
 
     // Now make the API call
-    const response = await apiClient.getEvents(validatedFields.data.token);
+    const response = await apiClient.getEvents();
 
     switch (response.status) {
         case HttpStatusCode.Ok:
