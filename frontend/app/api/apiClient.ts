@@ -61,6 +61,23 @@ class ApiClient {
             return this.serverErrorResponse;
         }
     }
+
+    async getEventById(id: number): Promise<AxiosResponse> {
+        try {
+            const response = await axios.get(`${this.host}/event/${id}`, {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                timeout: this.defaultTimeout,
+            });
+
+            console.debug("getEventById response =", response.data);
+            return response;
+        } catch (error) {
+            console.log("getEventById error =", error);
+            return this.serverErrorResponse;
+        }
+    }
 }
 
 /**
