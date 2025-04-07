@@ -7,13 +7,13 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import jpa.EntityManagerHelper;
 
-public abstract class AbstractJpaDao<K, T extends Serializable> implements IGenericDao<K, T> {
+public abstract class AbstractJpaDAO<K, T extends Serializable> implements IGenericDAO<K, T> {
 
     private Class<T> clazz;
 
     protected EntityManager entityManager;
 
-    public AbstractJpaDao() {
+    public AbstractJpaDAO() {
         this.entityManager = EntityManagerHelper.getEntityManager();
     }
 

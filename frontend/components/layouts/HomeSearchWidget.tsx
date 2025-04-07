@@ -7,11 +7,12 @@ import {Locations} from "@/assets/locations";
 
 export default function HomeSearchWidget() {
     return (
-        <div className={"w-full p-5 gap-3 rounded-2xl flex flex-col sm:flex-row bg-indigo-950"}>
+        <div
+            className={"w-full p-5 gap-3 rounded-2xl flex flex-col sm:flex-row bg-gray-200 border border-gray-500 text-black"}>
             <div className={"w-full flex flex-col gap-1"}>
                 <div className={"flex items-center gap-1"}>
-                    <LucideIcon name={"Search"} size={16} color="white"/>
-                    <h2 className="text-white">Titre</h2>
+                    <LucideIcon name={"Search"} size={16}/>
+                    <h2>Titre</h2>
                 </div>
 
                 <Input
@@ -24,8 +25,8 @@ export default function HomeSearchWidget() {
 
             <div className={"w-full flex flex-col gap-1"}>
                 <div className={"flex items-center gap-1"}>
-                    <LucideIcon name={"MapPin"} size={16} color="white"/>
-                    <h2 className="text-white">Lieu</h2>
+                    <LucideIcon name={"MapPin"} size={16}/>
+                    <h2>Lieu</h2>
                 </div>
 
                 <Autocomplete
@@ -45,8 +46,8 @@ export default function HomeSearchWidget() {
             </div>
             <div className={"w-full flex flex-col gap-1"}>
                 <div className={"flex items-center gap-1"}>
-                    <LucideIcon name={"Calendar"} size={16} color="white"/>
-                    <h2 className="text-white">Date</h2>
+                    <LucideIcon name={"Calendar"} size={16}/>
+                    <h2>Date</h2>
                 </div>
 
                 <DateRangePicker

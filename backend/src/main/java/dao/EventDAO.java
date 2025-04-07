@@ -4,7 +4,7 @@ import entities.Event;
 
 import java.util.List;
 
-public class EventDAO extends AbstractJpaDao<Long, Event> {
+public class EventDAO extends AbstractJpaDAO<Long, Event> {
     public EventDAO() {
         super();
         setClazz(Event.class);
