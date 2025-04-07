@@ -30,10 +30,10 @@ export default function CustomNavbar() {
             </NavbarContent>
             <NavbarContent justify="end">
                 <NavbarItem className="hidden lg:flex">
-                    <Link href="#" color="foreground">Login</Link>
+                    <Link href="/account/login" color="foreground">Login</Link>
                 </NavbarItem>
                 <NavbarItem>
-                    <Button as={Link} color="secondary" href="#" variant="solid">
+                    <Button as={Link} color="secondary" href="/account/register" variant="solid">
                         Sign Up
                     </Button>
                 </NavbarItem>

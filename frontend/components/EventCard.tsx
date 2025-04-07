@@ -35,9 +35,9 @@ export default function EventCard(props: Props) {
                             <h3 className="text-secondary">SEP</h3>
                             <h5 className="text-xl font-bold">13</h5>
                         </div>
-                        <div>
+                        <div className="m-3 flex-col flex items-start justify-start">
                             <h4 className="text-black text-large font-bold">{props.event.title}</h4>
-                            <p className="text-black text-tiny">Available soon.</p>
+                            <p className="text-black text-tiny overflow-ellipsis line-clamp-2">lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam lectus. </p>
                         </div>
                     </div>
                 </CardFooter>

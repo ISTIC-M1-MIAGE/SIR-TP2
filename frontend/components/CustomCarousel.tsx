@@ -29,7 +29,7 @@ export function CustomCarousel() {
                 <SwiperSlide key={"slide-" + index}>
                     <div className="flex h-full w-full items-center justify-center">
                         <img
-                            src="https://images.unsplash.com/photo-1587713714775-fa70364f6445?q=80&w=2882&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                            src="https://images.unsplash.com/photo-1522158637959-30385a09e0da?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                             alt="Slide 1"
                             className="h-48 w-96 object-fit rounded-lg"
                         />
