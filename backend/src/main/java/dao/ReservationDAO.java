@@ -3,19 +3,13 @@ package dao;
 import entities.Event;
 import entities.Pass;
 import entities.Reservation;
-import enums.PurchaseStateEnum;
 import jakarta.persistence.TypedQuery;
-import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.apache.commons.lang3.tuple.Pair;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-public class ReservationDAO extends AbstractJpaDao<Long, Reservation> {
+public class ReservationDAO extends AbstractJpaDAO<Long, Reservation> {
     public ReservationDAO() {
         super();
         setClazz(Reservation.class);

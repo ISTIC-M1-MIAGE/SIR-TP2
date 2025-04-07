@@ -18,14 +18,14 @@ export default function Page() {
     }, [false])
 
     return (
-        <div className="w-full h-full flex flex-col items-center justify-center">
-            <div className="w-10/12 h-96 relative flex flex-col items-center justify-center">
-                <div className="absolute w-2/3 inset-y-full flex items-center z-10">
+        <div className="w-full h-full p-10 flex flex-col items-center gap-5">
+            <div className="w-full h-96 gap-5 relative flex flex-col items-center justify-center">
+                <CustomCarousel/>
+                <div className="sm:absolute w-full sm:w-4/5 inset-y-full flex items-center z-10">
                     <HomeSearchWidget/>
                 </div>
-                    <CustomCarousel/>
             </div>
-            <div className="mt-32 w-10/12 h-full flex flex-col items-center justify-center">
+            <div className="sm:mt-24 w-full h-full flex flex-col items-center justify-center">
                 <EventGrid events={events}/>
             </div>
         </div>

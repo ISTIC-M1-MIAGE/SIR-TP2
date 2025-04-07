@@ -1,7 +1,7 @@
 'use client';
 
 // import Swiper core and required modules
-import {Navigation, Pagination, Mousewheel, Keyboard} from 'swiper/modules';
+import {Keyboard, Mousewheel, Navigation, Pagination} from 'swiper/modules';
 
 import {Swiper, SwiperSlide} from 'swiper/react';
 
@@ -19,7 +19,7 @@ export function CustomCarousel() {
         <Swiper
             cssMode={true}
             navigation={true}
-            pagination={true}
+            pagination={false}
             mousewheel={true}
             keyboard={true}
             modules={[Navigation, Pagination, Mousewheel, Keyboard]}
@@ -31,7 +31,7 @@ export function CustomCarousel() {
                         <img
                             src="https://images.unsplash.com/photo-1522158637959-30385a09e0da?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                             alt="Slide 1"
-                            className="h-48 w-96 object-fit rounded-lg"
+                            className="h-48 w-96 object-fit rounded-2xl"
                         />
                     </div>
 

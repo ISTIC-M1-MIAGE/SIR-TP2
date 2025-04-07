@@ -3,7 +3,7 @@ package dao;
 import java.io.Serializable;
 import java.util.List;
 
-public interface IGenericDao<K, T extends Serializable> {
+public interface IGenericDAO<K, T extends Serializable> {
 
     T findOne(final K id);
 
