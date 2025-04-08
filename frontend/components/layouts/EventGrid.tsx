@@ -2,9 +2,10 @@
 
 import EventCard from "@/components/EventCard";
 import EmptyCard from "@/components/EmptyCard";
+import Event from "@/models/event";
 
 interface Props {
-    events: any[];
+    events: Event[];
 }
 
 export default function EventGrid(props: Props) {

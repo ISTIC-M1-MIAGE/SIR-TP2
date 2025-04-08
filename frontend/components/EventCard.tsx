@@ -2,45 +2,56 @@
 
 import {Button, Card, CardFooter, CardHeader, Image} from "@heroui/react";
 import Link from 'next/link';
-
 import LucideIcon from "@/components/LucideIcon";
+import Event from "@/models/event";
 
 interface Props {
-    event: any;
+    event: Event;
 }
+
 export default function EventCard(props: Props) {
 
     return (
-            <Card as={Link} href={{
+        <Card
+            as={Link}
+            href={{
                 pathname: "/event_details",
                 query: {id: props.event.id}
-            }} className="min-w-full w-full h-80 cursor-pointer" isFooterBlurred>
-                <CardHeader className="absolute z-10 top-0 flex-row justify-between items-start">
-                    <div className={"bg-white rounded-lg px-3 py-1.5"}>
-                        <small className="font-bold">{props.event.country}</small>
-                    </div>
-                    <Button isIconOnly aria-label="Like" color="danger">
-                        <LucideIcon name={"Heart"}/>
-                    </Button>
-                </CardHeader>
-                <Image
-                    removeWrapper
-                    alt="Card example background"
-                    className="z-0 w-full h-full scale-125 -translate-y-6 object-cover"
-                    src={props.event.mainImage}
-                />
-                <CardFooter className="z-10 absolute bottom-0 bg-white border-t-1 border-zinc-100/50 justify-between">
-                    <div className="flex flex-row">
-                        <div className="m-3 flex-col flex items-center justify-start">
-                            <h3 className="text-secondary">SEP</h3>
-                            <h5 className="text-xl font-bold">13</h5>
-                        </div>
-                        <div className="m-3 flex-col flex items-start justify-start">
-                            <h4 className="text-black text-large font-bold">{props.event.title}</h4>
-                            <p className="text-black text-tiny overflow-ellipsis line-clamp-2">lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam lectus. </p>
-                        </div>
-                    </div>
-                </CardFooter>
-            </Card>
+            }}
+            className="w-full h-80 cursor-pointer"
+            isFooterBlurred
+        >
+            <CardHeader className="absolute z-10 top-0 flex-row justify-between items-start">
+                <div className={"bg-white rounded-lg px-3 py-1.5"}>
+                    <small className="font-bold">{props.event.country}</small>
+                </div>
+                <Button isIconOnly aria-label="Like" color="danger">
+                    <LucideIcon name={"Heart"}/>
+                </Button>
+            </CardHeader>
+            <Image
+                removeWrapper
+                alt={`event-${props.event.id}-main-image`}
+                className="z-0 w-full h-full scale-125 -translate-y-6 object-cover"
+                src={props.event.mainImage}
+            />
+            <CardFooter
+                className="z-10 absolute bottom-0 bg-white border-t-1 border-zinc-100/50 flex flex-row p-5 gap-5 items-start">
+                <div className="flex flex-col">
+                    <h3 className="text-secondary">
+                        {props.event.getFormattedStartDate()}
+                    </h3>
+                    <h5 className="text-xl font-bold">2025</h5>
+                </div>
+                <div className="flex flex-col">
+                    <h4 className="text-black text-large font-bold">
+                        {props.event.title}
+                    </h4>
+                    <p className="text-black text-tiny overflow-ellipsis line-clamp-2">
+                        {props.event.description}
+                    </p>
+                </div>
+            </CardFooter>
+        </Card>
     );
 }

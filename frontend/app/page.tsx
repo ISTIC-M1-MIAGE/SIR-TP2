@@ -5,14 +5,15 @@ import HomeSearchWidget from "@/components/layouts/HomeSearchWidget";
 import EventGrid from "@/components/layouts/EventGrid";
 import {useEffect, useState} from "react";
 import {getEventsAction} from "@/app/actions/getEventsAction";
+import Event from "@/models/event";
 
 export default function Page() {
-    const [events, setEvents] = useState([]);
+    const [events, setEvents] = useState<Event[]>([]);
 
     useEffect(() => {
         getEventsAction().then(response => {
             console.log('getInfosAction = ', response)
-            setEvents(response.data)
+            setEvents(Event.fromJsonArray(response.data))
         })
     }, [false])
 
@@ -24,7 +25,10 @@ export default function Page() {
                     <HomeSearchWidget/>
                 </div>
             </div>
-            <div className="sm:mt-24 w-full h-full flex flex-col items-center justify-center">
+            <div className="sm:mt-24 w-full flex flex-col gap-3 items-center justify-center">
+                <div className="w-full flex flex-row items-center">
+                    <h1 className={"text-3xl font-black"}>Evènements à venir</h1>
+                </div>
                 <EventGrid events={events}/>
             </div>
         </div>

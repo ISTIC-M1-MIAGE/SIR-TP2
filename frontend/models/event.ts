@@ -1,21 +1,46 @@
-// Define the EventState enum
 enum EventState {
     CREATED = 'CREATED',
-    // Add other states as needed
 }
 
-// Event model
-interface Event {
-    id: number;
-    title: string;
-    location: string;
-    description: string;
-    startDate: string; // ISO format date string
-    endDate: string; // ISO format date string
-    state: EventState;
-    closingTicketOfficeDate: string | null; // Optional date
-    mainImage: string;
-    currency: string;
-    country: string;
-    createdAt: string; // ISO format date string
+export default class Event {
+    constructor(
+        public id: number,
+        public title: string,
+        public location: string,
+        public description: string,
+        public startDate: string,
+        public endDate: string,
+        public state: EventState,
+        public closingTicketOfficeDate: string | null,
+        public mainImage: string,
+        public currency: string,
+        public country: string,
+        public createdAt: string,
+    ) {
+    }
+
+    static fromJson(json: any): Event {
+        return new Event(
+            json.id,
+            json.title,
+            json.location,
+            json.description,
+            json.startDate,
+            json.endDate,
+            json.state,
+            json.closingTicketOfficeDate,
+            json.mainImage,
+            json.currency,
+            json.country,
+            json.createdAt
+        );
+    }
+
+    static fromJsonArray(jsonArray: any[]): Event[] {
+        return jsonArray.map(json => Event.fromJson(json));
+    }
+
+    getFormattedStartDate(): string {
+        return new Date(this.startDate).toLocaleDateString();
+    }
 }
