@@ -22,12 +22,17 @@ export default function EventCard(props: Props) {
             isFooterBlurred
         >
             <CardHeader className="absolute z-10 top-0 flex-row justify-between items-start">
-                <div className={"bg-white rounded-lg px-3 py-1.5"}>
-                    <small className="font-bold">{props.event.country}</small>
+                <div className={"flex justify-center items-center border bg-white rounded-lg px-2 py-1.5"}>
+                    <small className="font-bold">New</small>
                 </div>
-                <Button isIconOnly aria-label="Like" color="danger">
-                    <LucideIcon name={"Heart"}/>
-                </Button>
+                <div className={'flex flex-row justify-center items-center gap-1'}>
+                    <Button isIconOnly aria-label="Share" size={'sm'} color={"default"}>
+                        <LucideIcon name={"Share"} size={20}/>
+                    </Button>
+                    <Button isIconOnly aria-label="Like" size={'sm'} color="default">
+                        <LucideIcon name={"Heart"} size={20}/>
+                    </Button>
+                </div>
             </CardHeader>
             <Image
                 removeWrapper
@@ -36,12 +41,21 @@ export default function EventCard(props: Props) {
                 src={props.event.mainImage}
             />
             <CardFooter
-                className="z-10 absolute bottom-0 bg-white border-t-1 border-zinc-100/50 flex flex-row p-5 gap-5 items-start">
-                <div className="flex flex-col">
-                    <h3 className="text-secondary">
-                        {props.event.getFormattedStartDate()}
-                    </h3>
-                    <h5 className="text-xl font-bold">2025</h5>
+                className="z-10 absolute bottom-0 bg-white border-t-1 border-zinc-100/50 flex flex-col p-5 items-start">
+                <div className="w-full flex flex-row justify-between items-center text-secondary font-bold">
+                    <small className={"flex flex-row justify-center items-center gap-1"}>
+                        <LucideIcon name={'Calendar'} size={12}/>
+                        {props.event.startDate.toLocaleDateString()}
+                    </small>
+                    {props.event.endDate && (
+                        <>
+                            <LucideIcon name={'ArrowRight'} size={16}/>
+                            <small className={"flex flex-row justify-center items-center gap-1"}>
+                                <LucideIcon name={'Calendar'} size={12}/>
+                                {props.event.endDate.toLocaleDateString()}
+                            </small>
+                        </>
+                    )}
                 </div>
                 <div className="flex flex-col">
                     <h4 className="text-black text-large font-bold">

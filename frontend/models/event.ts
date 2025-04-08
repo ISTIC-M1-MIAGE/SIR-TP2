@@ -8,14 +8,14 @@ export default class Event {
         public title: string,
         public location: string,
         public description: string,
-        public startDate: string,
-        public endDate: string,
+        public startDate: Date,
+        public endDate: Date,
         public state: EventState,
-        public closingTicketOfficeDate: string | null,
+        public closingTicketOfficeDate: Date | undefined,
         public mainImage: string,
         public currency: string,
         public country: string,
-        public createdAt: string,
+        public createdAt: Date,
     ) {
     }
 
@@ -25,22 +25,18 @@ export default class Event {
             json.title,
             json.location,
             json.description,
-            json.startDate,
-            json.endDate,
+            new Date(json.startDate),
+            new Date(json.endDate),
             json.state,
             json.closingTicketOfficeDate,
             json.mainImage,
             json.currency,
             json.country,
-            json.createdAt
+            new Date(json.createdAt)
         );
     }
 
     static fromJsonArray(jsonArray: any[]): Event[] {
         return jsonArray.map(json => Event.fromJson(json));
-    }
-
-    getFormattedStartDate(): string {
-        return new Date(this.startDate).toLocaleDateString();
     }
 }
