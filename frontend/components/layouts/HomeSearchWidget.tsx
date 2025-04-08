@@ -8,7 +8,7 @@ import {Locations} from "@/assets/locations";
 export default function HomeSearchWidget() {
     return (
         <div
-            className={"w-full p-5 gap-3 rounded-2xl flex flex-col sm:flex-row bg-gray-200 border border-gray-500 text-black"}>
+            className={"w-full p-5 gap-3 rounded-2xl flex flex-col sm:flex-row bg-gray-200 border-2 border-gray-300 text-black"}>
             <div className={"w-full flex flex-col gap-1"}>
                 <div className={"flex items-center gap-1"}>
                     <LucideIcon name={"Search"} size={16}/>

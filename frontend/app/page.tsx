@@ -10,11 +10,10 @@ export default function Page() {
     const [events, setEvents] = useState([]);
 
     useEffect(() => {
-        getEventsAction()
-            .then(response => {
-                console.log('getInfosAction = ', response)
-                setEvents(response.data)
-            })
+        getEventsAction().then(response => {
+            console.log('getInfosAction = ', response)
+            setEvents(response.data)
+        })
     }, [false])
 
     return (
@@ -29,6 +28,5 @@ export default function Page() {
                 <EventGrid events={events}/>
             </div>
         </div>
-
     );
 }

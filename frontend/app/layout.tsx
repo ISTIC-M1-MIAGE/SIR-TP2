@@ -4,6 +4,7 @@ import "./globals.css";
 import {Providers} from "@/app/providers";
 import {ReactNode} from "react";
 import CustomNavbar from "@/components/CustomNavbar";
+import Footer from "@/components/layouts/Footer";
 
 const geistSans = Geist({
     variable: "--font-geist-sans",
@@ -28,6 +29,7 @@ export default function RootLayout({children}: Readonly<{ children: ReactNode }>
         <Providers>
             {children}
         </Providers>
+        <Footer/>
         </body>
         </html>
     );
