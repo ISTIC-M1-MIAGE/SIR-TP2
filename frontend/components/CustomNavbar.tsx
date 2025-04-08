@@ -1,5 +1,5 @@
 'use client';
-import {Navbar, NavbarBrand, NavbarContent, NavbarItem, Link, Button} from "@heroui/react";
+import {Button, Link, Navbar, NavbarBrand, NavbarContent, NavbarItem} from "@heroui/react";
 
 export const AcmeLogo = () => {
     return (
@@ -16,7 +16,7 @@ export const AcmeLogo = () => {
 
 export default function CustomNavbar() {
     return (
-        <Navbar shouldHideOnScroll>
+        <Navbar shouldHideOnScroll isBordered={true}>
             <NavbarBrand>
                 <AcmeLogo/>
                 <p className="font-bold text-inherit">ACME</p>
