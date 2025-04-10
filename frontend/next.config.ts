@@ -6,6 +6,11 @@ const nextConfig: NextConfig = {
     env: {
         APP_VERSION: packageJson.version,
     },
+    experimental: {
+        serverActions: {
+            bodySizeLimit: '2mb',
+        },
+    },
 };
 
 export default nextConfig;

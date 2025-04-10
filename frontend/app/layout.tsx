@@ -19,7 +19,7 @@ export const metadata: Metadata = {
 export default function RootLayout({children}: Readonly<{ children: ReactNode }>) {
     return (
         <html lang="fr">
-        <body className={`${funnelDisplay.variable} light antialiased`}>
+        <body className={` light antialiased`}>
         <CustomNavbar/>
         <Providers>
             {children}

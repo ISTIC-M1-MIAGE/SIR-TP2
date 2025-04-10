@@ -10,48 +10,37 @@ import {Currency} from "@/models/currency";
 import {Countries} from "@/models/country";
 import {createEventAction} from "@/app/actions/createEventAction";
 import {baseFormActionResponse} from "@/app/utils/constants";
-import {ToastHelper} from "@/app/utils/toastHelper";
 
 export default function Page() {
     const fileinputRef = useRef(null);
     const [image, setImage] = useState<any>([]);
+    const [location, setLocation] = useState({
+        adresse: "1 rue de la paix",
+        ville: "Paris",
+        postal: "75001"
+    });
     const [formData, setFormData] = useState({
         mainImage: "",
-        title: "",
-        description: "",
+        title: "Mon évènement test",
+        description: "Description de l'évènement",
         location: "",
-        currency: "",
-        country: "",
-        startDate: "",
-        endDate: "",
+        currency: Currency.EUR,
+        country: Countries.FRA,
+        startDate: "2025-05-01T00:00",
+        endDate: "2025-05-05T00:00",
         organizerId: 0,
-        closingTicketOfficeDate: ""
+        closingTicketOfficeDate: "2025-05-03T00:00"
     });
-    const [location, setLocation] = useState({
-        adresse: "",
-        ville: "",
-        postal: "",
-    });
+
     const [state, formAction, isPending] = useActionState(createEventAction, baseFormActionResponse)
 
     useEffect(() => {
         if (state.success) {
-            // Store user token
-            //const token = state.data.token;
-            //User.storeToken(token).then(() => {
-            formData.location = `${location.adresse},${location.postal} ${location.ville}`;
-            formData.mainImage = image;
-            formData.organizerId = 1;
-            console.log("formData.startDate = ", formData.startDate);
-            createEventAction(formData)
-                    .then(response => {
-                        ToastHelper.successToast(state.message.title);
-                    })
-                    //});
+
         } else {
             //ToastHelper.errorToast(state.message.title);
         }
-    }, [state, formData.title])
+    }, [state])
 
     const handleDelete = () => {
         if (fileinputRef.current) {
@@ -67,6 +56,10 @@ export default function Page() {
             reader.onloadend = () => {
                 setImage(reader.result);
             };
+            setFormData({
+                ...formData,
+                mainImage: e.target.value
+            })
             reader.readAsDataURL(file);
         }
     }
@@ -83,9 +76,22 @@ export default function Page() {
                 <p>Remplissez le formulaire ci-dessous pour créer un évènement en tant qu'organisateur</p>
 
                 <div className="flex flex-col w-full h-full mt-5">
-                    <Form action={formAction} validationBehavior="aria" className="flex w-full h-full">
+                    <Form
+                        /*action={(data) => {
+                        data.set('location',`${location.adresse},${location.postal} ${location.ville}`);
+                        data.set('organizerId', "1");
+                        console.log("formData = ", data);
+                        formAction(data);
+                    }}
+
+                         */
+
+                        action={formAction}
+                        validationBehavior="aria"
+                        className="flex w-full h-full"
+                    >
                         <div className="flex flex-col w-full h-full relative mt-5 items-end">
-                            <input value={formData.mainImage} name="image" onChange={handleChange} className="hidden" ref={fileinputRef} type={"file"} accept="image/jpeg;image/png;image/jpg"/>
+                            <input value={formData.mainImage} name="mainImage" onChange={handleChange} className="hidden" ref={fileinputRef} type={"file"} accept="image/jpeg;image/png;image/jpg"/>
                             <div className="flex flex-row w-full justify-between">
                                 {(image != "")?
                                     <LucideTrash2 className="text-danger w-5 h-5 m-0" onClick={handleDelete}/>
@@ -195,10 +201,11 @@ export default function Page() {
                                 onChange={(e) => {
                                     setFormData({
                                         ...formData,
-                                        currency: e.target.value
+                                        currency: Currency[e.target.value as keyof typeof Currency]
                                     })
                                 }}
                                 value={formData.currency}
+                                defaultSelectedKeys={[formData.currency]}
                                 className="w-1/2"
                                 isRequired
                                 name="Devise"
@@ -215,18 +222,21 @@ export default function Page() {
                                 onChange={(e) => {
                                     setFormData({
                                         ...formData,
-                                        country: e.target.value
+                                        country: Countries[e.target.value as keyof typeof Countries]
+
                                     })
                                 }}
+
                                 value={formData.country}
                                 className="w-1/2 ml-5"
                                 isRequired
+                                defaultSelectedKeys={[formData.country]}
                                 name="country"
                                 label="Pays"
                                 placeholder="Choisir le pays"
                                 size="md">
                                 {Object.values(Countries).map((country) => (
-                                    <SelectItem key={country} >
+                                    <SelectItem key={country}>
                                         {country}
                                     </SelectItem>
                                 ))}
