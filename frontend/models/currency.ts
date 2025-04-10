@@ -1,4 +1,4 @@
-export enum Devises {
+export enum Currency {
     EURO = 'EUR',
     DOLLAR = 'USD',
     POUND = 'GBP',

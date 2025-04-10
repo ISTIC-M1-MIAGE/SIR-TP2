@@ -4,14 +4,54 @@ import {LucideImage, LucideTrash2} from "lucide-react";
 import {Button, Input, SelectItem} from "@heroui/react";
 import {Form} from "@heroui/form";
 import {Textarea} from "@heroui/input";
-import {useRef, useState} from "react";
+import {useActionState, useEffect, useRef, useState} from "react";
 import {Select} from "@heroui/select";
-import {Devises} from "@/models/devise";
+import {Currency} from "@/models/currency";
 import {Countries} from "@/models/country";
+import {createEventAction} from "@/app/actions/createEventAction";
+import {baseFormActionResponse} from "@/app/utils/constants";
+import {ToastHelper} from "@/app/utils/toastHelper";
 
 export default function Page() {
     const fileinputRef = useRef(null);
     const [image, setImage] = useState<any>([]);
+    const [formData, setFormData] = useState({
+        mainImage: "",
+        title: "",
+        description: "",
+        location: "",
+        currency: "",
+        country: "",
+        startDate: "",
+        endDate: "",
+        organizerId: 0,
+        closingTicketOfficeDate: ""
+    });
+    const [location, setLocation] = useState({
+        adresse: "",
+        ville: "",
+        postal: "",
+    });
+    const [state, formAction, isPending] = useActionState(createEventAction, baseFormActionResponse)
+
+    useEffect(() => {
+        if (state.success) {
+            // Store user token
+            //const token = state.data.token;
+            //User.storeToken(token).then(() => {
+            formData.location = `${location.adresse},${location.postal} ${location.ville}`;
+            formData.mainImage = image;
+            formData.organizerId = 1;
+            console.log("formData.startDate = ", formData.startDate);
+            createEventAction(formData)
+                    .then(response => {
+                        ToastHelper.successToast(state.message.title);
+                    })
+                    //});
+        } else {
+            //ToastHelper.errorToast(state.message.title);
+        }
+    }, [state, formData.title])
 
     const handleDelete = () => {
         if (fileinputRef.current) {
@@ -43,9 +83,9 @@ export default function Page() {
                 <p>Remplissez le formulaire ci-dessous pour créer un évènement en tant qu'organisateur</p>
 
                 <div className="flex flex-col w-full h-full mt-5">
-                    <Form validationBehavior="aria" className="flex w-full h-full">
+                    <Form action={formAction} validationBehavior="aria" className="flex w-full h-full">
                         <div className="flex flex-col w-full h-full relative mt-5 items-end">
-                            <input name="image" onChange={handleChange} className="hidden" ref={fileinputRef} type={"file"} accept="image/jpeg;image/png;image/jpg"/>
+                            <input value={formData.mainImage} name="image" onChange={handleChange} className="hidden" ref={fileinputRef} type={"file"} accept="image/jpeg;image/png;image/jpg"/>
                             <div className="flex flex-row w-full justify-between">
                                 {(image != "")?
                                     <LucideTrash2 className="text-danger w-5 h-5 m-0" onClick={handleDelete}/>
@@ -53,7 +93,6 @@ export default function Page() {
                                 }
 
                                 <p className="text-xs text-white rounded-t-xl bg-secondary-400 text-start px-3 py-2">Affiche de l'évènement</p>
-
                             </div>
                             <div onClick={handleClick}
                                  className="cursor-pointer w-full h-44 flex border-1.5 border-secondary-400 items-center rounded-tl-xl rounded-b-xl justify-center" >
@@ -64,7 +103,14 @@ export default function Page() {
                             </div>
                         </div>
                         <Input
+                            onChange={(e) => {
+                                setFormData({
+                                    ...formData,
+                                    title: e.target.value
+                                })
+                            }}
                             isRequired
+                            value={formData.title}
                             name="title"
                             label="Titre"
                             labelPlacement="inside"
@@ -73,6 +119,13 @@ export default function Page() {
                             size="md"
                         />
                         <Textarea
+                            onChange={(e) => {
+                                setFormData({
+                                    ...formData,
+                                    description: e.target.value
+                                })
+                            }}
+                            value={formData.description}
                             name="description"
                             label="Description"
                             labelPlacement="inside"
@@ -83,10 +136,17 @@ export default function Page() {
                             size="md"
                         />
 
-                        <div className="w-full border-t-1.5 border-secondary-400 my-2" >
+                        <div className="w-full border-t-1.5 border-secondary-200 my-2" >
                         </div>
                         <Input
                             isRequired
+                            onChange={(e) => {
+                                setLocation({
+                                    ...location,
+                                    adresse: e.target.value
+                                })
+                            }}
+                            value={location.adresse}
                             name="adresse"
                             label="Adresse"
                             labelPlacement="inside"
@@ -96,7 +156,14 @@ export default function Page() {
                         />
                         <div className="w-full flex flex-row items-center justify-between">
                             <Input
-                                className="w-5/12"
+                                onChange={(e) => {
+                                    setLocation({
+                                        ...location,
+                                        ville: e.target.value
+                                    })
+                                }}
+                                value={location.ville}
+                                className="w-1/2"
                                 isRequired
                                 name="ville"
                                 label="Ville"
@@ -106,7 +173,14 @@ export default function Page() {
                                 size="md"
                             />
                             <Input
-                                className="w-5/12"
+                                onChange={(e) => {
+                                    setLocation({
+                                        ...location,
+                                        postal: e.target.value
+                                    })
+                                }}
+                                value={location.postal}
+                                className="w-1/2 ml-5"
                                 isRequired
                                 name="postal"
                                 label="Code postal"
@@ -118,20 +192,34 @@ export default function Page() {
                         </div>
                         <div className="w-full flex flex-row items-center justify-between">
                             <Select
-                                className="w-5/12"
+                                onChange={(e) => {
+                                    setFormData({
+                                        ...formData,
+                                        currency: e.target.value
+                                    })
+                                }}
+                                value={formData.currency}
+                                className="w-1/2"
                                 isRequired
                                 name="Devise"
                                 label="Devise"
                                 placeholder="Choisir la devise accéptée"
                                 size="md">
-                                {Object.values(Devises).map((devise) => (
-                                    <SelectItem key={devise}>
-                                        {devise}
+                                {Object.values(Currency).map((currency) => (
+                                    <SelectItem key={currency}>
+                                        {currency}
                                     </SelectItem>
                                 ))}
                             </Select>
                             <Select
-                                className="w-5/12"
+                                onChange={(e) => {
+                                    setFormData({
+                                        ...formData,
+                                        country: e.target.value
+                                    })
+                                }}
+                                value={formData.country}
+                                className="w-1/2 ml-5"
                                 isRequired
                                 name="country"
                                 label="Pays"
@@ -144,36 +232,72 @@ export default function Page() {
                                 ))}
                             </Select>
                         </div>
-                        <div className="w-full border-t-1.5 border-secondary-400 my-2" >
+                        <div className="w-full border-t-1.5 border-secondary-200 my-2" >
                         </div>
+
                         <div className="w-full flex flex-row items-center justify-between">
                             <Input
-                                className="w-5/12"
+                                onChange={(e) => {
+                                    setFormData({
+                                        ...formData,
+                                        startDate: e.target.value
+                                    })
+                                }}
+                                value={formData.startDate}
+                                className="w-1/2"
                                 isRequired
                                 name="date_debut"
                                 label="Date de début"
                                 labelPlacement="inside"
                                 placeholder="Saisir la date de début"
-                                type="date"
+                                type="datetime-local"
                                 size="md"
                             />
                             <Input
-                                className="w-5/12"
+                                onChange={(e) => {
+                                    setFormData({
+                                        ...formData,
+                                        endDate: e.target.value
+                                    })
+                                }}
+                                value={formData.endDate}
+                                className="w-1/2 ml-5"
                                 isRequired
                                 name="date_fin"
                                 label="Date de fin"
                                 labelPlacement="inside"
                                 placeholder="Saisir la date de fin"
-                                type="date"
+                                type="datetime-local"
+                                size="md"
+                            />
+                        </div>
+                        <div className="w-full flex flex-row items-center justify-between">
+                            <Input
+                                onChange={(e) => {
+                                    console.log(e.target.value)
+                                    setFormData({
+                                        ...formData,
+                                        closingTicketOfficeDate: e.target.value
+                                    })
+                                }}
+                                value={formData.closingTicketOfficeDate}
+                                className="w-1/2"
+                                isRequired
+                                name="closing_ticket_office_date"
+                                label="Fermeture de la billetterie"
+                                labelPlacement="inside"
+                                placeholder="Fermeture de la billetterie"
+                                type="datetime-local"
                                 size="md"
                             />
                         </div>
 
                         <div className="w-full flex flex-row justify-end">
                             <Button
-                                className="w-1/3 mt-5 p-8 text-xl"
+                                className="w-1/3 my-5 p-8 text-xl"
                                 variant={"solid"}
                                 color={"secondary"}
+                                isLoading={isPending}
                                 size={"lg"}
                                 type={"submit"}
                             >

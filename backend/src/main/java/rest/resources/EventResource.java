@@ -1,8 +1,11 @@
 package rest.resources;
 
 import dao.EventDAO;
+import dao.UserDAO;
+import dto.EventDTOin;
 import dto.EventDTOout;
 import entities.Event;
+import entities.User;
 import io.swagger.v3.oas.annotations.Parameter;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
@@ -14,6 +17,7 @@ import java.util.List;
 @Produces({"application/json"})
 public class EventResource {
     private EventDAO eventDAO = new EventDAO();
+    private UserDAO userDAO = new UserDAO();
 
     @GET
     @Path("/")
@@ -37,9 +41,10 @@ public class EventResource {
     @POST
     @Consumes("application/json")
     public Response addEvent(
-            @Parameter(description = "Event object that needs to be added to the store", required = true) Event event) {
-        // add user
-        eventDAO.save(event);
+            @Parameter(description = "Event object that needs to be added to the store", required = true) EventDTOin event) {
+        // find user
+        User organizer = userDAO.findOne(event.getOrganizerId());
+        eventDAO.save(new Event(event, organizer));
         return Response.status(Response.Status.CREATED).entity("User created").build();
     }
 }

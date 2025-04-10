@@ -1,5 +1,6 @@
 package entities;
 
+import dto.EventDTOin;
 import enums.EventState;
 import jakarta.persistence.*;
 
@@ -75,6 +76,18 @@ public class Event implements Serializable {
         this.endDate = endDate;
         this.organizer = organizer;
         this.mainImage = mainImage;
+    }
+    public Event(EventDTOin eventDTOin, User organizer) {
+        this.title = eventDTOin.getTitle();
+        this.location = eventDTOin.getLocation();
+        this.description = eventDTOin.getDescription();
+        this.startDate = eventDTOin.getStartDate();
+        this.endDate = eventDTOin.getEndDate();
+        this.closingTicketOfficeDate = eventDTOin.getClosingTicketOfficeDate();
+        this.mainImage = eventDTOin.getMainImage();
+        this.currency = eventDTOin.getCurrency();
+        this.country = eventDTOin.getCountry();
+        this.organizer = organizer;
     }
 
     public Long getId() {

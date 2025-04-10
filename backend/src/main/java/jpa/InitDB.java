@@ -25,7 +25,7 @@ public class InitDB {
         User created = manager.find(User.class, 1);
         manager.persist(a);
         for (int i = 0; i < 2; i++) {
-            Event e = new Event("event_" + i, "location_" + i, "description_" + i, LocalDateTime.now(), LocalDateTime.now().plusDays(3), u, "mainImage_" + i);
+            Event e = new Event("event_" + i, "location_" + i, "lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam lectus. Sed sit amet ipsum mauris. Maecenas congue ligula ac quam viverra nec consectetur ante hendrerit. Donec et mollis dolor. Praesent et diam eget libero", LocalDateTime.now(), LocalDateTime.now().plusDays(3), u, "mainImage_" + i);
             manager.persist(e);
             u.getEvents().add(e);
             for (int j = 1; j < 3; j++) {

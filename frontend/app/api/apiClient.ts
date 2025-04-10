@@ -45,6 +45,69 @@ class ApiClient {
         }
     }
 
+    /**
+     * Send register request to the backend.
+     * @param payload
+     */
+    async register(payload: { email: string; motDePasse: string; }): Promise<AxiosResponse> {
+        try {
+            const response = await axios.post(`${this.host}/auth/register`, payload, {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                timeout: this.defaultTimeout,
+            });
+
+            console.debug("register response", response.data);
+            return response;
+        } catch (error) {
+            if (axios.isAxiosError(error)) {
+                console.error("register error", error);
+
+                switch (error.response?.status) {
+                    case HttpStatusCode.NotAcceptable:
+                        return error.response;
+                    default:
+                        return this.serverErrorResponse;
+                }
+            } else {
+                console.error("Une erreur inattendue s'est produite", error);
+                return this.serverErrorResponse;
+            }
+        }
+    }
+
+    /**
+     * Create a new event.
+     */
+    async createEvent(payload: {
+        mainImage: string,
+        title: string,
+        description: string,
+        location: string,
+        currency: string,
+        country: string,
+        startDate: string,
+        endDate: string,
+        organizerId: number,
+        closingTicketOfficeDate: string
+    }): Promise<AxiosResponse> {
+        try {
+            const response = await axios.post(`${this.host}/event`, payload, {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                timeout: this.defaultTimeout,
+            });
+
+            console.debug("createEvent response", response.data);
+            return response;
+        } catch (error) {
+            console.log("createEvent error", error);
+            return this.serverErrorResponse;
+        }
+    }
+
     async getEvents(): Promise<AxiosResponse> {
         try {
             const response = await axios.get(`${this.host}/event`, {
