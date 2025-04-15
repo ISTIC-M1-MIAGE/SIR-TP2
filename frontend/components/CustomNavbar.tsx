@@ -1,5 +1,6 @@
 'use client';
 import {Button, Link, Navbar, NavbarBrand, NavbarContent, NavbarItem} from "@heroui/react";
+import {redirect} from "next/navigation";
 
 export const AcmeLogo = () => {
     return (
@@ -17,7 +18,7 @@ export const AcmeLogo = () => {
 export default function CustomNavbar() {
     return (
         <Navbar shouldHideOnScroll isBordered={true}>
-            <NavbarBrand>
+            <NavbarBrand onClick={() => redirect('/')} className="cursor-pointer">
                 <AcmeLogo/>
                 <p className="font-bold text-inherit">ACME</p>
             </NavbarBrand>

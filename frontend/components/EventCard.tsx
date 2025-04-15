@@ -38,7 +38,7 @@ export default function EventCard(props: Props) {
                 removeWrapper
                 alt={`event-${props.event.id}-main-image`}
                 className="z-0 w-full h-full scale-125 -translate-y-6 object-cover"
-                src={props.event.mainImage}
+                src={`uploads/${props.event?.mainImage}`}
             />
             <CardFooter
                 className="z-10 absolute bottom-0 bg-white border-t-1 border-zinc-100/50 flex flex-col p-5 items-start">

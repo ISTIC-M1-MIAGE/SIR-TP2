@@ -80,7 +80,21 @@ class ApiClient {
     /**
      * Create a new event.
      */
-    async createEvent(payload: any): Promise<AxiosResponse> {
+    async createEvent(formData: FormData): Promise<AxiosResponse> {
+        // create the right payload
+        const payload : any = {
+            mainImage: formData.get("mainImage"),
+            title: formData.get("title"),
+            description: formData.get("description"),
+            location: formData.get("location"),
+            currency: formData.get("currency"),
+            country: formData.get("country"),
+            startDate: formData.get("startDate"),
+            endDate: formData.get("endDate"),
+            organizerId: 1,
+            closingTicketOfficeDate: formData.get("closingTicketOfficeDate"),
+        }
+        console.log("api client payload = ", payload);
         try {
             const response = await axios.post(`${this.host}/event`, payload, {
                 headers: {

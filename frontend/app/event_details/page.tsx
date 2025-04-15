@@ -32,7 +32,7 @@ export default function Page() {
                     </div>
                     <div className="flex h-full w-full items-center justify-center">
                         <img
-                            src={event?.mainImage}
+                            src={`uploads/${event?.mainImage}`}
                             alt="Slide 1"
                             className="h-full w-full object-cover"
                         />

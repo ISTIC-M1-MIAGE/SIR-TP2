@@ -10,6 +10,9 @@ import {Currency} from "@/models/currency";
 import {Countries} from "@/models/country";
 import {createEventAction} from "@/app/actions/createEventAction";
 import {baseFormActionResponse} from "@/app/utils/constants";
+import {saveFileAction} from "@/app/actions/saveFileAction";
+import {redirect} from "next/navigation";
+
 
 export default function Page() {
     const fileinputRef = useRef(null);
@@ -36,7 +39,7 @@ export default function Page() {
 
     useEffect(() => {
         if (state.success) {
-
+            redirect("/")
         } else {
             //ToastHelper.errorToast(state.message.title);
         }
@@ -49,18 +52,15 @@ export default function Page() {
             setImage("");
         }
     }
-    const handleChange = (e: any) => {
+    const handleChange = async (e: any) => {
         const file = e.target.files[0];
         if (file) {
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                setImage(reader.result);
-            };
+            const filename = await saveFileAction(file)
+            setImage(filename);
             setFormData({
                 ...formData,
-                mainImage: e.target.value
+                mainImage: filename
             })
-            reader.readAsDataURL(file);
         }
     }
     const handleClick = () => {
@@ -91,18 +91,18 @@ export default function Page() {
                         className="flex w-full h-full"
                     >
                         <div className="flex flex-col w-full h-full relative mt-5 items-end">
-                            <input value={formData.mainImage} name="mainImage" onChange={handleChange} className="hidden" ref={fileinputRef} type={"file"} accept="image/jpeg;image/png;image/jpg"/>
+                            <input onChange={handleChange} className="hidden" ref={fileinputRef} type={"file"} accept="image/jpeg;image/png;image/jpg"/>
                             <div className="flex flex-row w-full justify-between">
                                 {(image != "")?
                                     <LucideTrash2 className="text-danger w-5 h-5 m-0" onClick={handleDelete}/>
                                     : <p></p>
                                 }
-
+                                <input value={formData.mainImage} name="mainImage" className="hidden" readOnly={true}/>
                                 <p className="text-xs text-white rounded-t-xl bg-secondary-400 text-start px-3 py-2">Affiche de l'évènement</p>
                             </div>
                             <div onClick={handleClick}
                                  className="cursor-pointer w-full h-44 flex border-1.5 border-secondary-400 items-center rounded-tl-xl rounded-b-xl justify-center" >
-                                {(image != "")? <img className="flex flex-col w-full h-full object-cover rounded-tl-xl rounded-b-xl" src={image} />
+                                {(image != "")? <img className="flex flex-col w-full h-full object-cover rounded-tl-xl rounded-b-xl" src={`uploads/${image}`} />
                                     :
                                   <LucideImage className="text-gray-400 w-8 h-8"/>
                                 }
@@ -208,7 +208,7 @@ export default function Page() {
                                 defaultSelectedKeys={[formData.currency]}
                                 className="w-1/2"
                                 isRequired
-                                name="Devise"
+                                name="currency"
                                 label="Devise"
                                 placeholder="Choisir la devise accéptée"
                                 size="md">
@@ -256,7 +256,7 @@ export default function Page() {
                                 value={formData.startDate}
                                 className="w-1/2"
                                 isRequired
-                                name="date_debut"
+                                name="startDate"
                                 label="Date de début"
                                 labelPlacement="inside"
                                 placeholder="Saisir la date de début"
@@ -273,7 +273,7 @@ export default function Page() {
                                 value={formData.endDate}
                                 className="w-1/2 ml-5"
                                 isRequired
-                                name="date_fin"
+                                name="endDate"
                                 label="Date de fin"
                                 labelPlacement="inside"
                                 placeholder="Saisir la date de fin"
@@ -293,7 +293,7 @@ export default function Page() {
                                 value={formData.closingTicketOfficeDate}
                                 className="w-1/2"
                                 isRequired
-                                name="closing_ticket_office_date"
+                                name="closingTicketOfficeDate"
                                 label="Fermeture de la billetterie"
                                 labelPlacement="inside"
                                 placeholder="Fermeture de la billetterie"
