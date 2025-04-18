@@ -34,7 +34,7 @@ export default function CustomNavbar() {
                     <Link href="/account/login" color="foreground">Login</Link>
                 </NavbarItem>
                 <NavbarItem>
-                    <Button as={Link} color="secondary" href="/account/register" variant="solid">
+                    <Button as={Link} color="secondary" href="/account/register">
                         Sign Up
                     </Button>
                 </NavbarItem>

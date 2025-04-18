@@ -25,8 +25,8 @@ Voici une petite checklist que nous avons préparée pour suivre notre propre av
 - [ ] TP6 - Créer une application Adu pattern MVC en vanilla JS
 - [ ] TP7 - Angular
 - [ ] TP8 (Optionnel) - Vue JS
-- [ ] TP9 (Optionnel) - React
-- [ ] TP10 - Intégration frontend/backend
+- [x] TP9 (Optionnel) - React
+- [x] TP10 - Intégration frontend/backend
 - [ ] TP11 (Optionnel) - Déploiement sur VM
 - [ ] TP12 (Optionnel) - Docker
 
