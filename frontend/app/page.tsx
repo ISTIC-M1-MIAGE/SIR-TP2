@@ -11,6 +11,7 @@ import LucideIcon from "@/components/LucideIcon";
 import Link from "next/link";
 
 export default function Page() {
+    const [isSearchMode, setIsSearchMode] = useState(false);
     const [events, setEvents] = useState<Event[]>([]);
 
     useEffect(() => {
@@ -24,11 +25,17 @@ export default function Page() {
             <div className="w-10/12 h-full p-6 flex flex-col items-center gap-6">
                 <CustomCarousel/>
                 <div className="w-full sm:w-4/5 sm:-mt-16 inset-y-full flex items-center z-10">
-                    <HomeSearchWidget/>
+                    <HomeSearchWidget
+                        onSearchSuccess={(events) => {
+
+                        }}
+                    />
                 </div>
                 <div className="w-full flex flex-col gap-3 items-center justify-center">
                     <div className="w-full flex flex-row items-center justify-between mb-3">
-                        <h1 className={"text-3xl font-black"}>Evènements à venir</h1>
+                        <h1 className={"text-3xl font-black"}>
+                            {isSearchMode ? "Résultats de la recherche" : "Evènements à venir"}
+                        </h1>
                         <Button
                             as={Link}
                             href={"/create_event"}

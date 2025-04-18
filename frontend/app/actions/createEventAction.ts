@@ -4,7 +4,7 @@ import apiClient from "@/app/api/apiClient";
 import {HttpStatusCode} from "axios";
 import ActionHelper from "@/app/helpers/actionHelper";
 
-export async function createEventAction(prevState: any, formData: FormData,) {
+export async function createEventAction(prevState: any, formData: FormData) {
 
     //add location to payload
     const adresse = formData.get("adresse") as string;

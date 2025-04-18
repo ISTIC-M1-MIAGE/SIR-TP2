@@ -4,7 +4,7 @@ import apiClient from "@/app/api/apiClient";
 import {HttpStatusCode} from "axios";
 import ActionHelper from "@/app/helpers/actionHelper";
 
-export async function getEventsAction() {
+export async function searchEventAction(prevState: any, formData: FormData) {
     // Validate the form data
     //const validatedFields = Schema.safeParse({token})
 
@@ -12,15 +12,12 @@ export async function getEventsAction() {
     //if (!validatedFields.success) {
     //  return ActionHelper.invalidFieldsResponse(validatedFields.error.flatten().fieldErrors)
     //}
-
     // Now make the API call
-    const response = await apiClient.getEvents();
+    const response = await apiClient.searchEvents(formData);
 
-    switch (response.status) {
-        case HttpStatusCode.Ok:
-            // Return success response
-            return ActionHelper.successResponse({title: "Les évènements ont bien été récupérées"}, response.data);
-        default: // case HttpStatusCode.Forbidden:
-            return ActionHelper.defaultResponse({title: response.data.message});
+    if (response.status === HttpStatusCode.Ok) {
+        return ActionHelper.successResponse({title: "Voici les résultats de la recherche"}, response.data);
+    } else {
+        return ActionHelper.defaultResponse({title: response.data.message});
     }
 }

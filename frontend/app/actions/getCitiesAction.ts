@@ -1,14 +1,8 @@
 'use server'
 
-import {z} from 'zod'
 import apiClient from "@/app/api/apiClient";
 import {HttpStatusCode} from "axios";
 import ActionHelper from "@/app/helpers/actionHelper";
-
-// Define a schema for form validation
-const Schema = z.object({
-    token: z.string({message: "Le token d'authentification est requis"}),
-})
 
 export async function getCitiesAction() {
     // Validate the form data
