@@ -38,6 +38,8 @@ public class EventResource {
         return Response.ok().entity(new EventDTOout(event)).build();
     }
 
+
+
     @POST
     @Consumes("application/json")
     public Response addEvent(
@@ -45,6 +47,6 @@ public class EventResource {
         // find user
         User organizer = userDAO.findOne(event.getOrganizerId());
         eventDAO.save(new Event(event, organizer));
-        return Response.status(Response.Status.CREATED).entity("User created").build();
+        return Response.status(Response.Status.CREATED).entity("Event created").build();
     }
 }
