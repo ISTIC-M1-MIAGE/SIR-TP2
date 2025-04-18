@@ -42,7 +42,9 @@ export default function EventCard(props: Props) {
             />
             <CardFooter
                 className="z-10 absolute bottom-0 bg-white border-t-1 border-zinc-100/50 flex flex-col p-5 items-start">
-                <div className="w-full flex flex-row justify-between items-center text-secondary font-bold">
+                {/* Start & End dates */}
+                <div
+                    className="w-full flex flex-row justify-between items-center text-secondary font-bold">
                     <small className={"flex flex-row justify-center items-center gap-1"}>
                         <LucideIcon name={'Calendar'} size={12}/>
                         {props.event.startDate.toLocaleDateString()}

@@ -79,6 +79,7 @@ class ApiClient {
 
     /**
      * Create a new event.
+     * @param formData The form data to create the event from.
      */
     async createEvent(formData: FormData): Promise<AxiosResponse> {
         // create the right payload
@@ -148,6 +149,28 @@ class ApiClient {
             return response;
         } catch (error) {
             console.log("getEventById error =", error);
+            return this.serverErrorResponse;
+        }
+    }
+
+    /**
+     * Get the list of all events filtered by search criterias.
+     * @param formData The form data to filter the events from.
+     */
+    async searchEvents(formData: FormData): Promise<AxiosResponse> {
+        const searchPath = formData.keys().map(key => `${key}=${formData.get(key)}`).toArray().join("&");
+        try {
+            const response = await axios.get(`${this.host}/event/search?${searchPath}`, {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                timeout: this.defaultTimeout,
+            });
+
+            console.debug("searchEvents response =", response.data);
+            return response;
+        } catch (error) {
+            console.log("searchEvents error =", error);
             return this.serverErrorResponse;
         }
     }
