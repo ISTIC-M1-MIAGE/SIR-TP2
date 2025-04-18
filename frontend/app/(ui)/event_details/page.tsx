@@ -6,9 +6,9 @@ import {useEffect, useState} from "react";
 
 import {getEventByIdAction} from "@/app/actions/getEventByIdAction";
 import EventTimer from "@/components/layouts/EventTimer";
-import {LucideCalendar, LucideLocate, LucideMapPin} from "lucide-react";
-import {formatEventDateRange} from "@/app/utils/dateFormatter";
+import {LucideCalendar, LucideMapPin} from "lucide-react";
 import {Button, Link} from "@heroui/react";
+import DateHelper from "@/app/helpers/dateHelper";
 
 export default function Page() {
     const [event, setEvent] = useState<any>();
@@ -43,7 +43,10 @@ export default function Page() {
                     <div className="flex flex-row justify-between w-full mt-10">
                         <div className="flex flex-col w-1/2">
                             <p className="text-medium  ">
-                                lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam lectus. Sed sit amet ipsum mauris. Maecenas congue ligula ac quam viverra nec consectetur ante hendrerit. Donec et mollis dolor. Praesent et diam eget libero egestas mattis sit amet vitae augue.
+                                lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam lectus. Sed sit
+                                amet ipsum mauris. Maecenas congue ligula ac quam viverra nec consectetur ante
+                                hendrerit. Donec et mollis dolor. Praesent et diam eget libero egestas mattis sit amet
+                                vitae augue.
                             </p>
                         </div>
                         <div className="flex flex-col w-1/3">
@@ -58,12 +61,13 @@ export default function Page() {
                             </div>
                             <div className="flex flex-row gap-2 items-center">
                                 <LucideCalendar></LucideCalendar>
-                                <h2 className="text-2xl font-bold">{formatEventDateRange(event?.startDate, event?.endDate)}</h2>
+                                <h2 className="text-2xl font-bold">{DateHelper.formatEventDateRange(event?.startDate, event?.endDate)}</h2>
                             </div>
                             <div className="border-t-2 border-b-gray-400 p-3 mt-5">
                             </div>
                             <div className="flex flex-row gap-2 items-center justify-end">
-                                <Button as={Link} color="secondary" className="text-2xl p-10 mb-14" href="#" variant="solid">
+                                <Button as={Link} color="secondary" className="text-2xl p-10 mb-14" href="#"
+                                        variant="solid">
                                     Acheter
                                 </Button>
                             </div>

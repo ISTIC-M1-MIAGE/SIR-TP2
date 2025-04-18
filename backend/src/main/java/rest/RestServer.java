@@ -14,7 +14,7 @@ public class RestServer {
 
     public static void main(String[] args) {
         UndertowJaxrsServer ut = new UndertowJaxrsServer();
-        TestApplication ta = new TestApplication();
+        WebApp ta = new WebApp();
 
         ut.deploy(ta);
 

@@ -1,21 +1,23 @@
 import {addToast} from "@heroui/toast";
 
-export const ToastHelper = {
-    successToast(message: string) {
+export default abstract class ToastHelper {
+    static successToast(message: string) {
         addToast({
             title: "Succès",
             description: message,
             color: "success",
         });
-    },
-    infoToast(message: string) {
+    }
+
+    static infoToast(message: string) {
         addToast({
             title: "Infos",
             description: message,
             color: "default",
         });
-    },
-    errorToast(message: string) {
+    }
+
+    static errorToast(message: string) {
         addToast({
             title: "Erreur",
             description: message,

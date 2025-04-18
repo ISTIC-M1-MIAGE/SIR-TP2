@@ -16,7 +16,7 @@ export async function getEventsAction() {
 
     // Handle validation errors
     //if (!validatedFields.success) {
-      //  return ActionHelper.invalidFieldsResponse(validatedFields.error.flatten().fieldErrors)
+    //  return ActionHelper.invalidFieldsResponse(validatedFields.error.flatten().fieldErrors)
     //}
 
     // Now make the API call

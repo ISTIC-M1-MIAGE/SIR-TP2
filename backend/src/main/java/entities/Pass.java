@@ -138,15 +138,15 @@ public class Pass implements Serializable {
     public String toString() {
         return "\nPass{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
+                ", name='" + name + "'" +
                 ", price=" + price +
-                ", advantages='" + advantages + '\'' +
+                ", advantages='" + advantages + "'" +
                 ", event=" + event +
                 ", reservation=" + reservation +
                 ", oldPrice=" + oldPrice +
                 ", createdAt=" + createdAt.toString() +
                 ", updatedAt=" + updatedAt.toString() +
                 ", deletedAt=" + deletedAt.toString() +
-                '}';
+                "}";
     }
 }

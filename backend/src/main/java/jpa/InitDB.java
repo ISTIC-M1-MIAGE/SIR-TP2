@@ -19,29 +19,33 @@ public class InitDB {
 
         EntityTransaction tx = manager.getTransaction();
         tx.begin();
-        User u = new User("test", "test", "test@gmail.com", "passwordTest");
-        Admin a = new Admin("admin", "admin", "admin@gmail.com", "passwordAdmin");
-        manager.persist(u);
-        User created = manager.find(User.class, 1);
-        manager.persist(a);
+
+        City city = new City(35, "Rennes");
+        User user = new User("test", "test", "test@gmail.com", "passwordTest");
+        Admin admin = new Admin("admin", "admin", "admin@gmail.com", "passwordAdmin");
+        manager.persist(city);
+        manager.persist(user);
+        manager.persist(admin);
+
         for (int i = 0; i < 2; i++) {
-            Event e = new Event("event_" + i, "location_" + i, "lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam lectus. Sed sit amet ipsum mauris. Maecenas congue ligula ac quam viverra nec consectetur ante hendrerit. Donec et mollis dolor. Praesent et diam eget libero", LocalDateTime.now().plusDays(3), LocalDateTime.now().plusDays(4), u, "mainImage_" + i);
-            manager.persist(e);
-            u.getEvents().add(e);
+            Event event = new Event("event_" + i, "location_" + i, "lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam lectus. Sed sit amet ipsum mauris. Maecenas congue ligula ac quam viverra nec consectetur ante hendrerit. Donec et mollis dolor. Praesent et diam eget libero", LocalDateTime.now().plusDays(3), LocalDateTime.now().plusDays(4), city, user, "mainImage_" + i);
+            manager.persist(event);
+            city.getEvents().add(event);
+            user.getEvents().add(event);
             for (int j = 1; j < 3; j++) {
-                Pass p = new Pass("pass_" + i + "_" + j, 10.0 * j, e);
-                manager.persist(p);
-                e.getPasses().add(p);
+                Pass pass = new Pass("pass_" + i + "_" + j, 10.0 * j, event);
+                manager.persist(pass);
+                event.getPasses().add(pass);
                 for (int k = 0; k < 2; k++) {
-                    Reservation r = new Reservation(u, p, LocalDate.now());
-                    manager.persist(r);
-                    p.getReservations().add(r);
-                    Payment pay = new Payment("Payment_" + k, "PENDING", 10.0, "Le Paiement", r);
-                    manager.persist(pay);
+                    Reservation reservation = new Reservation(user, pass, LocalDate.now());
+                    manager.persist(reservation);
+                    pass.getReservations().add(reservation);
+                    Payment payment = new Payment("Payment_" + k, "PENDING", 10.0, "Le Paiement", reservation);
+                    manager.persist(payment);
                 }
             }
         }
         tx.commit();
-        System.out.println(".. done");
+        System.out.println("Database initialization done ✅");
     }
 }

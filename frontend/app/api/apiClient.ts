@@ -82,7 +82,7 @@ class ApiClient {
      */
     async createEvent(formData: FormData): Promise<AxiosResponse> {
         // create the right payload
-        const payload : any = {
+        const payload: any = {
             mainImage: formData.get("mainImage"),
             title: formData.get("title"),
             description: formData.get("description"),
@@ -111,6 +111,9 @@ class ApiClient {
         }
     }
 
+    /**
+     * Get the list of all events.
+     */
     async getEvents(): Promise<AxiosResponse> {
         try {
             const response = await axios.get(`${this.host}/event`, {
@@ -128,6 +131,10 @@ class ApiClient {
         }
     }
 
+    /**
+     * Get one event by its ID.
+     * @param id The ID of the event to get.
+     */
     async getEventById(id: number): Promise<AxiosResponse> {
         try {
             const response = await axios.get(`${this.host}/event/${id}`, {
@@ -141,6 +148,26 @@ class ApiClient {
             return response;
         } catch (error) {
             console.log("getEventById error =", error);
+            return this.serverErrorResponse;
+        }
+    }
+
+    /**
+     * Get the list of all cities.
+     */
+    async getCities(): Promise<AxiosResponse> {
+        try {
+            const response = await axios.get(`${this.host}/city`, {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                timeout: this.defaultTimeout,
+            });
+
+            console.debug("getCities response =", response.data);
+            return response;
+        } catch (error) {
+            console.log("getCities error =", error);
             return this.serverErrorResponse;
         }
     }

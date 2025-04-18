@@ -1,6 +1,7 @@
 'use client';
 import {Button, Link, Navbar, NavbarBrand, NavbarContent, NavbarItem} from "@heroui/react";
 import {redirect} from "next/navigation";
+import LucideIcon from "@/components/LucideIcon";
 
 export const AcmeLogo = () => {
     return (
@@ -18,9 +19,10 @@ export const AcmeLogo = () => {
 export default function CustomNavbar() {
     return (
         <Navbar shouldHideOnScroll isBordered={true}>
-            <NavbarBrand onClick={() => redirect('/')} className="cursor-pointer">
-                <AcmeLogo/>
-                <p className="font-bold text-inherit">ACME</p>
+            <NavbarBrand onClick={() => redirect('/')}
+                         className="cursor-pointer flex flex-row items-center gap-1">
+                <LucideIcon name="Ticket" size={24}/>
+                <p className="font-bold">Eventizer</p>
             </NavbarBrand>
             <NavbarContent className="hidden sm:flex gap-4" justify="center">
                 {/*<NavbarItem>
@@ -31,11 +33,13 @@ export default function CustomNavbar() {
             </NavbarContent>
             <NavbarContent justify="end">
                 <NavbarItem className="hidden lg:flex">
-                    <Link href="/account/login" color="foreground">Login</Link>
+                    <Link href="/account/login" color="foreground">
+                        Se connecter
+                    </Link>
                 </NavbarItem>
                 <NavbarItem>
-                    <Button as={Link} color="secondary" href="/account/register" variant="solid">
-                        Sign Up
+                    <Button as={Link} color="secondary" href="/account/register">
+                        S'inscrire
                     </Button>
                 </NavbarItem>
             </NavbarContent>

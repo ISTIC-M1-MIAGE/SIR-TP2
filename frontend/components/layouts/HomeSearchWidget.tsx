@@ -1,14 +1,35 @@
 'use client';
 
 import LucideIcon from "@/components/LucideIcon";
-import {Autocomplete, AutocompleteItem, DateRangePicker, Input} from "@heroui/react";
+import {Autocomplete, AutocompleteItem, Button, DateRangePicker, Input} from "@heroui/react";
 import {getLocalTimeZone, today} from "@internationalized/date";
-import {Locations} from "@/assets/locations";
+import {Form} from "@heroui/form";
+import {useActionState, useEffect, useState} from "react";
+import {createEventAction} from "@/app/actions/createEventAction";
+import {baseFormActionResponse} from "@/app/utils/constants";
+import UIHelper from "@/app/helpers/UIHelper";
+import City from "@/models/city";
+import {getCitiesAction} from "@/app/actions/getCitiesAction";
 
 export default function HomeSearchWidget() {
+    const [cities, setCities] = useState<City[]>([]);
+    const [formData, setFormData] = useState({
+        title: "",
+        city: "",
+        dateRange: "",
+    });
+
+    const [state, formAction, isPending] = useActionState(createEventAction, baseFormActionResponse)
+
+    useEffect(() => {
+        getCitiesAction().then(response => {
+            setCities(City.fromJsonArray(response.data));
+        })
+    }, []);
+
     return (
-        <div
-            className={"w-full p-5 gap-3 rounded-2xl flex flex-col sm:flex-row bg-white border-2 shadow-2xl text-black"}>
+        <Form
+            className={"w-full p-5 gap-3 rounded-3xl flex flex-col sm:flex-row sm:items-end bg-white border-2 shadow-2xl text-black"}>
             <div className={"w-full flex flex-col gap-1"}>
                 <div className={"flex items-center gap-1"}>
                     <LucideIcon name={"Search"} size={16}/>
@@ -20,6 +41,9 @@ export default function HomeSearchWidget() {
                     placeholder="Rechercher par type"
                     variant={"underlined"}
                     size={"sm"}
+                    errorMessage={state.errors?.title}
+                    onChange={(e) => UIHelper.handleInputChange(e, setFormData)}
+                    value={formData.title}
                 />
             </div>
 
@@ -34,12 +58,12 @@ export default function HomeSearchWidget() {
                     variant={"underlined"}
                     size={"sm"}
                 >
-                    {Locations.map((location) => (
+                    {cities.map((city) => (
                         <AutocompleteItem
                             className="text-white"
-                            key={location.id}
+                            key={city.id}
                         >
-                            {location.name}
+                            {city.name}
                         </AutocompleteItem>
                     ))}
                 </Autocomplete>
@@ -60,6 +84,17 @@ export default function HomeSearchWidget() {
                     //selectorIcon={<LucideIcon name={"ChevronDown"} size={16}/>}
                 />
             </div>
-        </div>
+
+            <Button
+                type={"submit"}
+                color="secondary"
+                className={"mt-3 sm:mt-0"}
+            >
+                <LucideIcon name={'Search'}/>
+                <p className={'sm:hidden'}>
+                    Rechercher
+                </p>
+            </Button>
+        </Form>
     );
 }

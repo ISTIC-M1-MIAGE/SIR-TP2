@@ -19,8 +19,6 @@ public class EventDTOout implements Serializable {
     private EventState state = EventState.CREATED;
     private LocalDateTime closingTicketOfficeDate;
     private String mainImage;
-    private String currency;
-    private String country;
     private LocalDateTime createdAt;
 
     public EventDTOout(Event event) {
@@ -33,12 +31,10 @@ public class EventDTOout implements Serializable {
         state = event.getState();
         closingTicketOfficeDate = event.getClosingTicketOfficeDate();
         mainImage = event.getMainImage();
-        currency = event.getCurrency();
-        country = event.getCountry();
         createdAt = event.getCreatedAt();
     }
 
-    public static List<EventDTOout> convertEventsToDTOout(List<Event> events) {
+    public static List<EventDTOout> convertEntitiesToDTOout(List<Event> events) {
         return events.stream()
                 .map(EventDTOout::new).collect(Collectors.toList());
     }
@@ -113,22 +109,6 @@ public class EventDTOout implements Serializable {
 
     public void setMainImage(String mainImage) {
         this.mainImage = mainImage;
-    }
-
-    public String getCurrency() {
-        return currency;
-    }
-
-    public void setCurrency(String currency) {
-        this.currency = currency;
-    }
-
-    public String getCountry() {
-        return country;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
     }
 
     public LocalDateTime getCreatedAt() {

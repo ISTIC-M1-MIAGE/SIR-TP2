@@ -1,9 +1,11 @@
 package rest.resources;
 
+import dao.CityDAO;
 import dao.EventDAO;
 import dao.UserDAO;
 import dto.EventDTOin;
 import dto.EventDTOout;
+import entities.City;
 import entities.Event;
 import entities.User;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -17,6 +19,7 @@ import java.util.List;
 @Produces({"application/json"})
 public class EventResource {
     private EventDAO eventDAO = new EventDAO();
+    private CityDAO cityDAO = new CityDAO();
     private UserDAO userDAO = new UserDAO();
 
     @GET
@@ -24,7 +27,7 @@ public class EventResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getEvents() {
         List<Event> events = eventDAO.findAll();
-        return Response.ok().entity(EventDTOout.convertEventsToDTOout(events)).build();
+        return Response.ok().entity(EventDTOout.convertEntitiesToDTOout(events)).build();
     }
 
     @GET
@@ -44,9 +47,10 @@ public class EventResource {
     @Consumes("application/json")
     public Response addEvent(
             @Parameter(description = "Event object that needs to be added to the store", required = true) EventDTOin event) {
-        // find user
+        // find city and user
+        City city = cityDAO.findOne(event.getCityId());
         User organizer = userDAO.findOne(event.getOrganizerId());
-        eventDAO.save(new Event(event, organizer));
+        eventDAO.save(new Event(event, city, organizer));
         return Response.status(Response.Status.CREATED).entity("Event created").build();
     }
 }
