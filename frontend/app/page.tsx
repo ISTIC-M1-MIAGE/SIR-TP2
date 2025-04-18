@@ -27,7 +27,8 @@ export default function Page() {
                 <div className="w-full sm:w-4/5 sm:-mt-16 inset-y-full flex items-center z-10">
                     <HomeSearchWidget
                         onSearchSuccess={(events) => {
-
+                            setIsSearchMode(true);
+                            setEvents(events);
                         }}
                     />
                 </div>

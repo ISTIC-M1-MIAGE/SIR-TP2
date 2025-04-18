@@ -155,10 +155,20 @@ class ApiClient {
 
     /**
      * Get the list of all events filtered by search criterias.
-     * @param formData The form data to filter the events from.
+     * @param payload
      */
-    async searchEvents(formData: FormData): Promise<AxiosResponse> {
-        const searchPath = formData.keys().map(key => `${key}=${formData.get(key)}`).toArray().join("&");
+    async searchEvents(payload: {
+        title?: string;
+        city?: number;
+        startDate?: string;
+        endDate?: string;
+    }): Promise<AxiosResponse> {
+        const searchPath = Object.entries(payload)
+            .filter(([_, value]) => value !== undefined && value !== '')
+            .map(([key, value]) => `${key}=${value}`)
+            .join('&');
+        console.log("searchEvents searchPath:", searchPath);
+
         try {
             const response = await axios.get(`${this.host}/event/search?${searchPath}`, {
                 headers: {

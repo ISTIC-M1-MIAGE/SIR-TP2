@@ -1,7 +1,7 @@
 export default class City {
     constructor(
         public id: number,
-        public code: string,
+        public code: number,
         public name: string,
     ) {
     }

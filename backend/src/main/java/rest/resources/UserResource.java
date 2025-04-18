@@ -8,14 +8,14 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
 @Path("user")
-@Produces({"application/json"})
+@Produces(MediaType.APPLICATION_JSON)
+@Consumes(MediaType.APPLICATION_JSON)
 public class UserResource {
 
-    private UserDAO userDAO = new UserDAO();
+    private final UserDAO userDAO = new UserDAO();
 
     @GET
     @Path("/{userId}")
-    @Produces(MediaType.APPLICATION_JSON)
     public Response getUserById(@PathParam("userId") Long userId) {
         User user = userDAO.findOne(userId);
         if (user == null) {
@@ -26,7 +26,6 @@ public class UserResource {
 
 
     @POST
-    @Consumes("application/json")
     public Response addUser(
             @Parameter(description = "User object that needs to be added to the store", required = true) User user) {
         // add user

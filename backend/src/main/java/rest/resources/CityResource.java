@@ -17,13 +17,13 @@ import jakarta.ws.rs.core.Response;
 import java.util.List;
 
 @Path("city")
-@Produces({"application/json"})
+@Produces(MediaType.APPLICATION_JSON)
+@Consumes(MediaType.APPLICATION_JSON)
 public class CityResource {
-    private CityDAO cityDAO = new CityDAO();
+    private final CityDAO cityDAO = new CityDAO();
 
     @GET
     @Path("/")
-    @Produces(MediaType.APPLICATION_JSON)
     public Response getCities() {
         List<City> cities = cityDAO.findAll();
         return Response.ok().entity(CityDTOout.convertEntitiesToDTOout(cities)).build();

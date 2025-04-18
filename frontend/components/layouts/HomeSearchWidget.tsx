@@ -11,6 +11,7 @@ import City from "@/models/city";
 import {getCitiesAction} from "@/app/actions/getCitiesAction";
 import {searchEventAction} from "@/app/actions/searchEventAction";
 import ToastHelper from "@/app/helpers/toastHelper";
+import Event from "@/models/event";
 
 interface Props {
     //defaultValue?: TimerValue;
@@ -22,11 +23,10 @@ export default function HomeSearchWidget(props: Props) {
     const [formData, setFormData] = useState({
         title: "",
         city: "",
-        dateRange: null,
-        /*dateRange: {
+        dateRange: {
             start: today(getLocalTimeZone()),
             end: today(getLocalTimeZone()).add({months: 1}),
-        }*/
+        }
     });
 
     const [state, formAction, isPending] = useActionState(searchEventAction, baseFormActionResponse)
@@ -42,7 +42,9 @@ export default function HomeSearchWidget(props: Props) {
     useEffect(() => {
         if (state.success) {
             ToastHelper.successToast(state.message.title);
-            // TODO: Update event array
+            if (props.onSearchSuccess) {
+                props.onSearchSuccess(Event.fromJsonArray(state.data));
+            }
         } else {
             ToastHelper.errorToast(state.message.title);
         }
@@ -50,7 +52,14 @@ export default function HomeSearchWidget(props: Props) {
 
     return (
         <Form
-            action={formAction}
+            action={(data) => {
+                if (formData.dateRange) {
+                    data.set('startDate', formData.dateRange.start.toString());
+                    data.set('endDate', formData.dateRange.end.toString());
+                }
+                console.log("formData = ", data);
+                formAction(data);
+            }}
             className={"w-full p-5 gap-3 rounded-3xl flex flex-col md:flex-row sm:items-end bg-white border-2 shadow-2xl text-black"}>
             <div className={"w-full flex flex-col sm:flex-row gap-3"}>
                 <div className={"w-full flex flex-col gap-1"}>
@@ -66,6 +75,8 @@ export default function HomeSearchWidget(props: Props) {
                         variant={"underlined"}
                         size={"sm"}
                         id={"title"}
+                        name={"title"}
+                        aria-label={"title"}
                         value={formData.title}
                         onChange={(e) => UIHelper.handleInputChange(e, setFormData)}
                         errorMessage={state.errors?.title}
@@ -84,6 +95,8 @@ export default function HomeSearchWidget(props: Props) {
                         variant={"underlined"}
                         size={"sm"}
                         id={"city"}
+                        name={"city"}
+                        aria-label={"city"}
                         value={formData.city}
                         onChange={(e) => UIHelper.handleInputChange(e, setFormData)}
                         errorMessage={state.errors?.city}
@@ -92,6 +105,7 @@ export default function HomeSearchWidget(props: Props) {
                             <AutocompleteItem
                                 className="text-white"
                                 key={city.id}
+                                id={city.id.toString()}
                             >
                                 {city.name}
                             </AutocompleteItem>
@@ -113,7 +127,9 @@ export default function HomeSearchWidget(props: Props) {
                         visibleMonths={2}
                         minValue={today(getLocalTimeZone())}
                         id={"dateRange"}
+                        aria-label={"dateRange"}
                         value={formData.dateRange}
+                        defaultValue={formData.dateRange}
                         onChange={(e) => UIHelper.handleDateRangePickerChange('dateRange', e, setFormData)}
                         errorMessage={state.errors?.city}
                     />

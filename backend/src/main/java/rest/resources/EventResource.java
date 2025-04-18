@@ -10,29 +10,42 @@ import entities.Event;
 import entities.User;
 import io.swagger.v3.oas.annotations.Parameter;
 import jakarta.ws.rs.*;
-import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
 import java.util.List;
 
 @Path("event")
+@Consumes({"application/json"})
 @Produces({"application/json"})
 public class EventResource {
-    private EventDAO eventDAO = new EventDAO();
-    private CityDAO cityDAO = new CityDAO();
-    private UserDAO userDAO = new UserDAO();
+    private final EventDAO eventDAO = new EventDAO();
+    private final CityDAO cityDAO = new CityDAO();
+    private final UserDAO userDAO = new UserDAO();
 
     @GET
     @Path("/")
-    @Produces(MediaType.APPLICATION_JSON)
     public Response getEvents() {
         List<Event> events = eventDAO.findAll();
         return Response.ok().entity(EventDTOout.convertEntitiesToDTOout(events)).build();
     }
 
+
+    @GET
+    @Path("/search")
+    public Response searchEvents(
+            @QueryParam("title") String title,
+            @QueryParam("city") Long cityId,
+            @QueryParam("startDate") String startDate,
+            @QueryParam("endDate") String endDate
+    ) {
+        List<Event> events = eventDAO.findBySearchCriteria(title, cityId, startDate, endDate);
+        return Response.ok()
+                .entity(EventDTOout.convertEntitiesToDTOout(events))
+                .build();
+    }
+
     @GET
     @Path("/{eventId}")
-    @Produces(MediaType.APPLICATION_JSON)
     public Response getEventById(@PathParam("eventId") Long eventId) {
         Event event = eventDAO.findOne(eventId);
         if (event == null) {
@@ -42,9 +55,7 @@ public class EventResource {
     }
 
 
-
     @POST
-    @Consumes("application/json")
     public Response addEvent(
             @Parameter(description = "Event object that needs to be added to the store", required = true) EventDTOin event) {
         // find city and user

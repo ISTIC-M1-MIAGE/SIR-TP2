@@ -13,7 +13,10 @@ export async function searchEventAction(prevState: any, formData: FormData) {
     //  return ActionHelper.invalidFieldsResponse(validatedFields.error.flatten().fieldErrors)
     //}
     // Now make the API call
-    const response = await apiClient.searchEvents(formData);
+    console.log("searchEventAction FormData = ", formData);
+    const formDataObject = Object.fromEntries(formData.entries()
+        .filter(([key, _]) => !key.startsWith('$ACTION')));
+    const response = await apiClient.searchEvents(formDataObject);
 
     if (response.status === HttpStatusCode.Ok) {
         return ActionHelper.successResponse({title: "Voici les résultats de la recherche"}, response.data);

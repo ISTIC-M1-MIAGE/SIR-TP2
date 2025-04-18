@@ -7,19 +7,20 @@ import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import rest.auth.JwtUtil;
 import rest.auth.PasswordUtil;
 
 @Path("auth")
-@Produces({"application/json"})
+@Produces(MediaType.APPLICATION_JSON)
+@Consumes(MediaType.APPLICATION_JSON)
 public class AuthResource {
 
-    private UserDAO userDAO = new UserDAO();
+    private final UserDAO userDAO = new UserDAO();
 
-    @Path("login")
     @POST
-    @Consumes("application/json")
+    @Path("login")
     public Response login(String email, String password) {
         User user = userDAO.findByEmail(email);
         if (user == null) {
@@ -38,9 +39,8 @@ public class AuthResource {
 
     }
 
-    @Path("register")
     @POST
-    @Consumes("application/json")
+    @Path("register")
     public Response register(User user) {
         // Here you would typically save the user to the database
         String encryptedPassword = PasswordUtil.hashPassword(user.getPassword()); // Encrypt the password before saving
