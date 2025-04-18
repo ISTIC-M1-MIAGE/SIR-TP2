@@ -27,12 +27,13 @@ import jakarta.ws.rs.ApplicationPath;
 import jakarta.ws.rs.core.Application;
 import jakarta.ws.rs.ext.ContextResolver;
 import jakarta.ws.rs.ext.Provider;
+import rest.resources.CityResource;
 import rest.resources.EventResource;
 import rest.resources.SwaggerResource;
 import rest.resources.UserResource;
 
 @ApplicationPath("/")
-public class TestApplication extends Application {
+public class WebApp extends Application {
 
     @Provider
     public static class ObjectMapperContextResolver implements ContextResolver<ObjectMapper> {
@@ -59,6 +60,7 @@ public class TestApplication extends Application {
 
         clazzes.add(OpenApiResource.class);
         clazzes.add(UserResource.class);
+        clazzes.add(CityResource.class);
         clazzes.add(EventResource.class);
         clazzes.add(SwaggerResource.class);
 //        clazzes.add(AcceptHeaderOpenApiResource.class);

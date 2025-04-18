@@ -11,11 +11,10 @@ public class EventDTOin implements Serializable {
     private LocalDateTime endDate;
     private LocalDateTime closingTicketOfficeDate;
     private String mainImage;
-    private String currency;
-    private String country;
+    private Long cityId;
     private Long organizerId;
 
-    public EventDTOin(String title, String location, String description, LocalDateTime startDate, LocalDateTime endDate, LocalDateTime closingTicketOfficeDate, String mainImage, String currency, String country, Long organizerId) {
+    public EventDTOin(String title, String location, String description, LocalDateTime startDate, LocalDateTime endDate, LocalDateTime closingTicketOfficeDate, String mainImage, String currency, String country, Long cityId, Long organizerId) {
         this.title = title;
         this.location = location;
         this.description = description;
@@ -23,8 +22,7 @@ public class EventDTOin implements Serializable {
         this.endDate = endDate;
         this.closingTicketOfficeDate = closingTicketOfficeDate;
         this.mainImage = mainImage;
-        this.currency = currency;
-        this.country = country;
+        this.cityId = cityId;
         this.organizerId = organizerId;
     }
 
@@ -87,20 +85,12 @@ public class EventDTOin implements Serializable {
         this.mainImage = mainImage;
     }
 
-    public String getCurrency() {
-        return currency;
+    public Long getCityId() {
+        return cityId;
     }
 
-    public void setCurrency(String currency) {
-        this.currency = currency;
-    }
-
-    public String getCountry() {
-        return country;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
+    public void setCityId(Long cityId) {
+        this.cityId = cityId;
     }
 
     public Long getOrganizerId() {

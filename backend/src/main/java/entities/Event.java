@@ -34,6 +34,9 @@ public class Event implements Serializable {
     @Column(name = "end_date", nullable = false)
     private LocalDateTime endDate;
 
+    @ManyToOne(targetEntity = City.class, fetch = FetchType.LAZY)
+    private City city;
+
     @ManyToOne(targetEntity = User.class, fetch = FetchType.LAZY)
     private User organizer;
 
@@ -49,12 +52,6 @@ public class Event implements Serializable {
     @Column(name = "main_image", nullable = false)
     private String mainImage;
 
-    @Column(name = "currency", length = 10, nullable = false)
-    private String currency = "EUR";
-
-    @Column(name = "country", nullable = false)
-    private String country = "FR";
-
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
 
@@ -68,16 +65,17 @@ public class Event implements Serializable {
     public Event() {
     }
 
-    public Event(String title, String location, String description, LocalDateTime startDate, LocalDateTime endDate, User organizer, String mainImage) {
+    public Event(String title, String location, String description, LocalDateTime startDate, LocalDateTime endDate, City city, User organizer, String mainImage) {
         this.title = title;
         this.location = location;
         this.description = description;
         this.startDate = startDate;
         this.endDate = endDate;
+        this.city = city;
         this.organizer = organizer;
         this.mainImage = mainImage;
     }
-    public Event(EventDTOin eventDTOin, User organizer) {
+    public Event(EventDTOin eventDTOin, City city, User organizer) {
         this.title = eventDTOin.getTitle();
         this.location = eventDTOin.getLocation();
         this.description = eventDTOin.getDescription();
@@ -85,8 +83,7 @@ public class Event implements Serializable {
         this.endDate = eventDTOin.getEndDate();
         this.closingTicketOfficeDate = eventDTOin.getClosingTicketOfficeDate();
         this.mainImage = eventDTOin.getMainImage();
-        this.currency = eventDTOin.getCurrency();
-        this.country = eventDTOin.getCountry();
+        this.city = city;
         this.organizer = organizer;
     }
 
@@ -138,6 +135,14 @@ public class Event implements Serializable {
         this.endDate = endDate;
     }
 
+    public City getCity() {
+        return city;
+    }
+
+    public void setCity(City city) {
+        this.city = city;
+    }
+
     public User getOrganizer() {
         return organizer;
     }
@@ -178,22 +183,6 @@ public class Event implements Serializable {
         this.mainImage = mainImage;
     }
 
-    public String getCurrency() {
-        return currency;
-    }
-
-    public void setCurrency(String currency) {
-        this.currency = currency;
-    }
-
-    public String getCountry() {
-        return country;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
-    }
-
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }
@@ -222,21 +211,20 @@ public class Event implements Serializable {
     public String toString() {
         return "\nEvent{" +
                 "id=" + id +
-                ", title='" + title + '\'' +
-                ", location='" + location + '\'' +
-                ", description='" + description + '\'' +
+                ", title='" + title + "'" +
+                ", location='" + location + "'" +
+                ", description='" + description + "'" +
                 ", startDate=" + startDate.toString() +
                 ", endDate=" + endDate.toString() +
+                ", city=" + city.toString() +
                 ", organizer=" + organizer.toString() +
                 ", passes=" + passes +
                 ", state=" + state +
                 ", closingTicketOfficeDate=" + closingTicketOfficeDate +
-                ", mainImage='" + mainImage + '\'' +
-                ", currency='" + currency + '\'' +
-                ", country='" + country + '\'' +
+                ", mainImage='" + mainImage + "'" +
                 ", createdAt=" + createdAt.toString() +
                 ", updatedAt=" + updatedAt.toString() +
                 ", deletedAt=" + deletedAt.toString() +
-                '}';
+                "}";
     }
 }
