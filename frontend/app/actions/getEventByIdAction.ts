@@ -3,20 +3,20 @@
 import {z} from 'zod'
 import apiClient from "@/app/api/apiClient";
 import {HttpStatusCode} from "axios";
-import ActionHelper from "@/app/helpers/actionHelper";
+import ActionHelper from "@/app/utils/helpers/actionHelper";
 
 // Define a schema for form validation
 const Schema = z.object({
     token: z.string({message: "Le token d'authentification est requis"}),
 })
 
-export async function getEventByIdAction(id : any) {
+export async function getEventByIdAction(id: any) {
     // Validate the form data
     //const validatedFields = Schema.safeParse({token})
 
     // Handle validation errors
     //if (!validatedFields.success) {
-      //  return ActionHelper.invalidFieldsResponse(validatedFields.error.flatten().fieldErrors)
+    //  return ActionHelper.invalidFieldsResponse(validatedFields.error.flatten().fieldErrors)
     //}
 
     // Now make the API call
