@@ -3,7 +3,7 @@
 import {z} from 'zod'
 import apiClient from "@/app/api/apiClient";
 import {HttpStatusCode} from "axios";
-import ActionHelper from "@/app/utils/helpers/actionHelper";
+import ActionHelper from "@/app/helpers/actionHelper";
 
 // Define a schema for form validation
 const Schema = z.object({

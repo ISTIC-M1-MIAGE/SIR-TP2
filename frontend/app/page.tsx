@@ -17,7 +17,7 @@ export default function Page() {
         getEventsAction().then(response => {
             setEvents(Event.fromJsonArray(response.data));
         })
-    }, [false])
+    }, []);
 
     return (
         <div className="w-full h-full flex flex-col items-center justify-center">

@@ -3,13 +3,16 @@
 import LucideIcon from "@/components/LucideIcon";
 import {Autocomplete, AutocompleteItem, Button, DateRangePicker, Input} from "@heroui/react";
 import {getLocalTimeZone, today} from "@internationalized/date";
-import {Locations} from "@/assets/locations";
 import {Form} from "@heroui/form";
-import {useActionState, useState} from "react";
+import {useActionState, useEffect, useState} from "react";
 import {createEventAction} from "@/app/actions/createEventAction";
 import {baseFormActionResponse} from "@/app/utils/constants";
+import UIHelper from "@/app/helpers/UIHelper";
+import City from "@/models/city";
+import {getCitiesAction} from "@/app/actions/getCitiesAction";
 
 export default function HomeSearchWidget() {
+    const [cities, setCities] = useState<City[]>([]);
     const [formData, setFormData] = useState({
         title: "",
         city: "",
@@ -17,6 +20,12 @@ export default function HomeSearchWidget() {
     });
 
     const [state, formAction, isPending] = useActionState(createEventAction, baseFormActionResponse)
+
+    useEffect(() => {
+        getCitiesAction().then(response => {
+            setCities(City.fromJsonArray(response.data));
+        })
+    }, []);
 
     return (
         <Form
@@ -32,6 +41,9 @@ export default function HomeSearchWidget() {
                     placeholder="Rechercher par type"
                     variant={"underlined"}
                     size={"sm"}
+                    errorMessage={state.errors?.title}
+                    onChange={(e) => UIHelper.handleInputChange(e, setFormData)}
+                    value={formData.title}
                 />
             </div>
 
@@ -46,12 +58,12 @@ export default function HomeSearchWidget() {
                     variant={"underlined"}
                     size={"sm"}
                 >
-                    {Locations.map((location) => (
+                    {cities.map((city) => (
                         <AutocompleteItem
                             className="text-white"
-                            key={location.id}
+                            key={city.id}
                         >
-                            {location.name}
+                            {city.name}
                         </AutocompleteItem>
                     ))}
                 </Autocomplete>

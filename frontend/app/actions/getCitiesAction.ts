@@ -10,7 +10,7 @@ const Schema = z.object({
     token: z.string({message: "Le token d'authentification est requis"}),
 })
 
-export async function getEventByIdAction(id: any) {
+export async function getCitiesAction() {
     // Validate the form data
     //const validatedFields = Schema.safeParse({token})
 
@@ -20,13 +20,16 @@ export async function getEventByIdAction(id: any) {
     //}
 
     // Now make the API call
-    const response = await apiClient.getEventById(id);
+    const response = await apiClient.getCities();
 
     switch (response.status) {
         case HttpStatusCode.Ok:
-            // Return success response
-            return ActionHelper.successResponse({title: "L' évènement a bien été récupéré"}, response.data);
-        default: // case HttpStatusCode.Forbidden:
-            return ActionHelper.defaultResponse({title: response.data.message});
+            return ActionHelper.successResponse({
+                title: "Les villes ont bien été récupérées"
+            }, response.data);
+        default:
+            return ActionHelper.defaultResponse({
+                title: response.data.message
+            });
     }
 }

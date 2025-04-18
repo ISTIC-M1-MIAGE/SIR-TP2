@@ -6,12 +6,13 @@ import {Form} from "@heroui/form";
 import {Textarea} from "@heroui/input";
 import {useActionState, useEffect, useRef, useState} from "react";
 import {Select} from "@heroui/select";
-import {Currency} from "@/models/currency";
-import {Countries} from "@/models/country";
 import {createEventAction} from "@/app/actions/createEventAction";
 import {baseFormActionResponse} from "@/app/utils/constants";
 import {saveFileAction} from "@/app/actions/saveFileAction";
 import {redirect} from "next/navigation";
+import UIHelper from "@/app/helpers/UIHelper";
+import City from "@/models/city";
+import {getCitiesAction} from "@/app/actions/getCitiesAction";
 
 
 export default function Page() {
@@ -22,13 +23,13 @@ export default function Page() {
         ville: "Paris",
         postal: "75001"
     });
+    const [cities, setCities] = useState<City[]>([]);
     const [formData, setFormData] = useState({
         mainImage: "",
         title: "Mon évènement test",
         description: "Description de l'évènement",
         location: "",
-        currency: Currency.EUR,
-        country: Countries.FRA,
+        city: undefined,
         startDate: "2025-05-01T00:00",
         endDate: "2025-05-05T00:00",
         organizerId: 0,
@@ -44,6 +45,12 @@ export default function Page() {
             //ToastHelper.errorToast(state.message.title);
         }
     }, [state])
+
+    useEffect(() => {
+        getCitiesAction().then(response => {
+            setCities(City.fromJsonArray(response.data));
+        })
+    }, []);
 
     const handleDelete = () => {
         if (fileinputRef.current) {
@@ -63,6 +70,7 @@ export default function Page() {
             })
         }
     }
+
     const handleClick = () => {
         if (fileinputRef.current) {
             // @ts-ignore
@@ -91,20 +99,24 @@ export default function Page() {
                         className="flex w-full h-full"
                     >
                         <div className="flex flex-col w-full h-full relative mt-5 items-end">
-                            <input onChange={handleChange} className="hidden" ref={fileinputRef} type={"file"} accept="image/jpeg;image/png;image/jpg"/>
+                            <input onChange={handleChange} className="hidden" ref={fileinputRef} type={"file"}
+                                   accept="image/jpeg;image/png;image/jpg"/>
                             <div className="flex flex-row w-full justify-between">
-                                {(image != "")?
+                                {(image != "") ?
                                     <LucideTrash2 className="text-danger w-5 h-5 m-0" onClick={handleDelete}/>
                                     : <p></p>
                                 }
                                 <input value={formData.mainImage} name="mainImage" className="hidden" readOnly={true}/>
-                                <p className="text-xs text-white rounded-t-xl bg-secondary-400 text-start px-3 py-2">Affiche de l'évènement</p>
+                                <p className="text-xs text-white rounded-t-xl bg-secondary-400 text-start px-3 py-2">Affiche
+                                    de l'évènement</p>
                             </div>
                             <div onClick={handleClick}
-                                 className="cursor-pointer w-full h-44 flex border-1.5 border-secondary-400 items-center rounded-tl-xl rounded-b-xl justify-center" >
-                                {(image != "")? <img className="flex flex-col w-full h-full object-cover rounded-tl-xl rounded-b-xl" src={`uploads/${image}`} />
+                                 className="cursor-pointer w-full h-44 flex border-1.5 border-secondary-400 items-center rounded-tl-xl rounded-b-xl justify-center">
+                                {(image != "") ?
+                                    <img className="flex flex-col w-full h-full object-cover rounded-tl-xl rounded-b-xl"
+                                         src={`uploads/${image}`}/>
                                     :
-                                  <LucideImage className="text-gray-400 w-8 h-8"/>
+                                    <LucideImage className="text-gray-400 w-8 h-8"/>
                                 }
                             </div>
                         </div>
@@ -142,7 +154,7 @@ export default function Page() {
                             size="md"
                         />
 
-                        <div className="w-full border-t-1.5 border-secondary-200 my-2" >
+                        <div className="w-full border-t-1.5 border-secondary-200 my-2">
                         </div>
                         <Input
                             isRequired
@@ -196,53 +208,24 @@ export default function Page() {
                                 size="md"
                             />
                         </div>
-                        <div className="w-full flex flex-row items-center justify-between">
-                            <Select
-                                onChange={(e) => {
-                                    setFormData({
-                                        ...formData,
-                                        currency: Currency[e.target.value as keyof typeof Currency]
-                                    })
-                                }}
-                                value={formData.currency}
-                                defaultSelectedKeys={[formData.currency]}
-                                className="w-1/2"
-                                isRequired
-                                name="currency"
-                                label="Devise"
-                                placeholder="Choisir la devise accéptée"
-                                size="md">
-                                {Object.values(Currency).map((currency) => (
-                                    <SelectItem key={currency}>
-                                        {currency}
-                                    </SelectItem>
-                                ))}
-                            </Select>
-                            <Select
-                                onChange={(e) => {
-                                    setFormData({
-                                        ...formData,
-                                        country: Countries[e.target.value as keyof typeof Countries]
-
-                                    })
-                                }}
-
-                                value={formData.country}
-                                className="w-1/2 ml-5"
-                                isRequired
-                                defaultSelectedKeys={[formData.country]}
-                                name="country"
-                                label="Pays"
-                                placeholder="Choisir le pays"
-                                size="md">
-                                {Object.values(Countries).map((country) => (
-                                    <SelectItem key={country}>
-                                        {country}
-                                    </SelectItem>
-                                ))}
-                            </Select>
-                        </div>
-                        <div className="w-full border-t-1.5 border-secondary-200 my-2" >
+                        <Select
+                            onChange={(e) => UIHelper.handleInputChange(e, setFormData)}
+                            value={formData.city}
+                            errorMessage={state.errors?.city}
+                            className="w-1/2 ml-5"
+                            isRequired
+                            defaultSelectedKeys={formData.city ? [formData.city] : undefined}
+                            name="city"
+                            label="Ville"
+                            placeholder="Choisir la ville"
+                            size="md">
+                            {cities.map((city) => (
+                                <SelectItem key={city.id}>
+                                    {city.name}
+                                </SelectItem>
+                            ))}
+                        </Select>
+                        <div className="w-full border-t-1.5 border-secondary-200 my-2">
                         </div>
 
                         <div className="w-full flex flex-row items-center justify-between">

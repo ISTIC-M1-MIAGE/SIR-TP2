@@ -8,7 +8,7 @@ import {getEventByIdAction} from "@/app/actions/getEventByIdAction";
 import EventTimer from "@/components/layouts/EventTimer";
 import {LucideCalendar, LucideMapPin} from "lucide-react";
 import {Button, Link} from "@heroui/react";
-import DateHelper from "@/app/utils/helpers/dateHelper";
+import DateHelper from "@/app/helpers/dateHelper";
 
 export default function Page() {
     const [event, setEvent] = useState<any>();
