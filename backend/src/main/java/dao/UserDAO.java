@@ -16,7 +16,7 @@ public class UserDAO extends AbstractJpaDAO<Long, User> {
      * @return the User entity with the specified email address
      */
     public User findByEmail(String email) {
-        return entityManager.createQuery("SELECT u FROM User u WHERE u.email = :email", User.class)
+        return entityManager.createQuery("select u from User u WHERE u.email = :email", User.class)
                 .setParameter("email", email)
                 .getSingleResult();
     }

@@ -1,10 +1,12 @@
-import type {Metadata} from "next";
+import type {GetServerSideProps, Metadata} from "next";
 import {Funnel_Display} from "next/font/google";
 import "./globals.css";
 import {Providers} from "@/app/providers";
 import {ReactNode} from "react";
 import CustomNavbar from "@/components/CustomNavbar";
 import Footer from "@/components/layouts/Footer";
+import axios from "axios";
+import User from "@/models/user";
 
 const funnelDisplay = Funnel_Display({
     variable: "--font-funnel-display",
@@ -15,6 +17,7 @@ export const metadata: Metadata = {
     title: "Eventizer",
     description: "Application web de gestion d'évènements et ventes de tickets en ligne",
 };
+
 
 export default function RootLayout({children}: Readonly<{ children: ReactNode }>) {
     return (

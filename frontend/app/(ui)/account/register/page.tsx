@@ -1,8 +1,31 @@
 'use client';
 import {Form} from "@heroui/form";
 import {Button, Input} from "@heroui/react";
+import {useActionState, useEffect, useState} from "react";
+import {createEventAction} from "@/app/actions/createEventAction";
+import {baseFormActionResponse} from "@/app/utils/constants";
+import {redirect} from "next/navigation";
+import {registerAction} from "@/app/actions/registerAction";
 
 export default function Page() {
+    const [formData, setFormData] = useState({
+        firstname: "Jack",
+        lastname: "Sparow",
+        email: "jacksparow@pirate.com",
+        phone: "0712345678",
+        password: "Example",
+        passwordConfirm: "Example",
+    });
+
+    const [state, formAction, isPending] = useActionState(registerAction, baseFormActionResponse)
+
+    useEffect(() => {
+        if (state.success) {
+            redirect("/auth/login");
+        } else {
+            //ToastHelper.errorToast(state.message.title);
+        }
+    }, [state])
     return (
         <div className="w-full h-dvh flex flex-row items-center justify-between">
             <div className="w-5/12 h-full flex flex-col items-center justify-center">
@@ -17,38 +40,36 @@ export default function Page() {
                     <h1 className="text-4xl font-bold mb-8">
                         Inscription
                     </h1>
-                    <Form validationBehavior="aria" className="w-3/4">
+                    <Form action={formAction} validationBehavior="aria" className="w-3/4">
                         <div className="flex-row w-full flex gap-5">
                             <Input
                                 isRequired
-                                name="name"
+                                name="lastname"
+                                value={formData.lastname}
                                 label="Nom"
                                 labelPlacement="inside"
                                 placeholder="Saisir votre Prénom"
                                 type="text"
                                 size="lg"
-                                validate={(value) => {
 
-                                    return true;
-                                }}
                             />
                             <Input
                             isRequired
                             name="firstname"
+                            value={formData.firstname}
                             label="Prénom"
                             labelPlacement="inside"
                             placeholder="Saisir votre Prénom"
                             type="text"
                             size="lg"
-                            validate={(value) => {
-                                return true;
-                            }}
+
                         />
                         </div>
 
                         <Input
                             isRequired
                             name="email"
+                            value={formData.email}
                             label="Email"
                             labelPlacement="inside"
                             placeholder="Saisir votre email"
@@ -61,6 +82,7 @@ export default function Page() {
                         <Input
                             isRequired
                             name="phone"
+                            value={formData.phone}
                             label="Téléphone"
                             labelPlacement="inside"
                             placeholder="Saisir votre téléphone"
@@ -73,6 +95,7 @@ export default function Page() {
                         <Input
                             isRequired
                             name="password"
+                            value={formData.password}
                             label="Mot de passe"
                             labelPlacement="inside"
                             placeholder="Mot de Passe"
@@ -86,9 +109,9 @@ export default function Page() {
                             labelPlacement="inside"
                             placeholder="Confirmer Mot de Passe"
                             type="password"
+                            value={formData.passwordConfirm}
                             validate={(value) => {
-                                const password = document.querySelector('input[name="password"]')?.textContent;
-                                if (value !== password) {
+                                if (value != formData.password) {
                                     return "Les mots de passe ne correspondent pas";
                                 }
                                 return true;

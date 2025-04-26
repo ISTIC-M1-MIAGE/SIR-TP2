@@ -1,8 +1,27 @@
 'use client';
 import {Form} from "@heroui/form";
 import {Button, Input} from "@heroui/react";
+import {useActionState, useEffect, useState} from "react";
+import {registerAction} from "@/app/actions/registerAction";
+import {baseFormActionResponse} from "@/app/utils/constants";
+import {redirect} from "next/navigation";
+import {loginAction} from "@/app/actions/loginAction";
 
 export default function Page() {
+    const [formData, setFormData] = useState({
+        email: "jacksparow@pirate.com",
+        password: "Example",
+    });
+
+    const [state, formAction, isPending] = useActionState(loginAction, baseFormActionResponse)
+
+    useEffect(() => {
+        if (state.success) {
+            //redirect("/account/profile");
+        } else {
+            //ToastHelper.errorToast(state.message.title);
+        }
+    }, [state])
     return (
         <div className="w-full h-dvh flex flex-row items-center justify-between">
                 <div className="w-5/12 h-full flex flex-col items-center justify-center">
@@ -17,10 +36,11 @@ export default function Page() {
                         <h1 className="text-4xl font-bold mb-8">
                             Connexion
                         </h1>
-                        <Form validationBehavior="aria" className="w-3/4">
+                        <Form action={formAction} validationBehavior="aria" className="w-3/4">
                             <Input
                                 isRequired
                                 name="email"
+                                value={formData.email}
                                 label="Email"
                                 labelPlacement="inside"
                                 placeholder="Saisir votre email"
@@ -33,6 +53,7 @@ export default function Page() {
                             <Input
                                 isRequired
                                 name="password"
+                                value={formData.password}
                                 label="Mot de passe"
                                 labelPlacement="inside"
                                 placeholder="Mot de Passe"

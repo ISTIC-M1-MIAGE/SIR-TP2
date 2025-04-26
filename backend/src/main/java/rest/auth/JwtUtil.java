@@ -5,7 +5,7 @@ import java.util.Date;
 import java.security.Key;
 
 public class JwtUtil {
-    private static final String SECRET = "your-256-bit-secret-your-256-bit-secret"; // at least 256 bits
+    private static final String SECRET = "1NQNnY3SHrZlnbK2jv6+GDwKtkjR3+CW2EuC0wC+d1E="; // at least 256 bits
     private static final Key KEY = Keys.hmacShaKeyFor(SECRET.getBytes());
 
     public static String generateToken(String username) {

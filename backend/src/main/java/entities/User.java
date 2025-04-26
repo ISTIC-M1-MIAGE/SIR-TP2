@@ -25,7 +25,7 @@ public class User implements Serializable {
     @Column(name = "lastname", nullable = false)
     private String lastname;
 
-    @Column(name = "email", nullable = false)
+    @Column(name = "email", nullable = false, unique = true)
     private String email;
 
     @Column(name = "phone", length = 15)
@@ -50,7 +50,6 @@ public class User implements Serializable {
     private LocalDateTime deletedAt;
 
     public User() {
-
     }
 
     public User(String firstname, String lastname, String email, String password) {
