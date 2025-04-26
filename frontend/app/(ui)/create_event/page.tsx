@@ -13,11 +13,13 @@ import {redirect} from "next/navigation";
 import UIHelper from "@/app/helpers/UIHelper";
 import City from "@/models/city";
 import {getCitiesAction} from "@/app/actions/getCitiesAction";
+import {vi} from "@faker-js/faker";
 
 
 export default function Page() {
     const fileinputRef = useRef(null);
     const [image, setImage] = useState<any>([]);
+    const [ville, setVille] = useState("");
     const [location, setLocation] = useState({
         adresse: "1 rue de la paix",
         ville: "Paris",
@@ -35,6 +37,12 @@ export default function Page() {
         organizerId: 0,
         closingTicketOfficeDate: "2025-05-03T00:00"
     });
+
+    const handleCityChange = (id : number) => {
+       const name = cities.find((city) => city.id == id)?.name || "Ville non trouvée";
+       setVille(name);
+    };
+
 
     const [state, formAction, isPending] = useActionState(createEventAction, baseFormActionResponse)
 
@@ -173,23 +181,27 @@ export default function Page() {
                             size="md"
                         />
                         <div className="w-full flex flex-row items-center justify-between">
-                            <Input
+                            <Select
                                 onChange={(e) => {
-                                    setLocation({
-                                        ...location,
-                                        ville: e.target.value
-                                    })
-                                }}
-                                value={location.ville}
+                                    UIHelper.handleInputChange((e), setFormData)
+                                    handleCityChange(e.target.value as unknown as number);
+                                    }
+                                }
+                                value={formData.city}
+                                errorMessage={state.errors?.city}
                                 className="w-1/2"
                                 isRequired
-                                name="ville"
+                                defaultSelectedKeys={formData.city ? [formData.city] : undefined}
+                                name="city"
                                 label="Ville"
-                                labelPlacement="inside"
-                                placeholder="Saisir la ville"
-                                type="text"
-                                size="md"
-                            />
+                                placeholder="Choisir la ville"
+                                size="md">
+                                {cities.map((city) => (
+                                    <SelectItem key={city.id} >
+                                        {city.name}
+                                    </SelectItem>
+                                ))}
+                            </Select>
                             <Input
                                 onChange={(e) => {
                                     setLocation({
@@ -208,24 +220,12 @@ export default function Page() {
                                 size="md"
                             />
                         </div>
-                        <Select
-                            onChange={(e) => UIHelper.handleInputChange(e, setFormData)}
-                            value={formData.city}
-                            errorMessage={state.errors?.city}
-                            className="w-1/2 ml-5"
-                            isRequired
-                            defaultSelectedKeys={formData.city ? [formData.city] : undefined}
-                            name="city"
-                            label="Ville"
-                            placeholder="Choisir la ville"
-                            size="md">
-                            {cities.map((city) => (
-                                <SelectItem key={city.id}>
-                                    {city.name}
-                                </SelectItem>
-                            ))}
-                        </Select>
                         <div className="w-full border-t-1.5 border-secondary-200 my-2">
+                            <Input
+                                value={ville}
+                                name="ville"
+                                className="hidden"
+                            />
                         </div>
 
                         <div className="w-full flex flex-row items-center justify-between">
@@ -283,6 +283,8 @@ export default function Page() {
                                 type="datetime-local"
                                 size="md"
                             />
+                            <div className="w-1/2 ml-5"> </div>
+
                         </div>
 
                         <div className="w-full flex flex-row justify-end">

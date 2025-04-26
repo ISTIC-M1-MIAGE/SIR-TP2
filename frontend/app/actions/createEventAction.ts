@@ -6,6 +6,7 @@ import ActionHelper from "@/app/helpers/actionHelper";
 
 export async function createEventAction(prevState: any, formData: FormData) {
 
+    // Get city forom his id
     //add location to payload
     const adresse = formData.get("adresse") as string;
     const cp = formData.get("postal") as string;

@@ -1,4 +1,5 @@
 import axios, {AxiosResponse, HttpStatusCode} from 'axios';
+import {cookies} from "next/headers";
 
 class ApiClient {
     private readonly host = "http://127.0.0.1:8080";
@@ -13,20 +14,85 @@ class ApiClient {
         config: {},
     } as AxiosResponse;
 
+    async logout(): Promise<AxiosResponse> {
+        try {
+            const response = await axios.get(`${this.host}/auth/logout`, {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                withCredentials: true,
+                timeout: this.defaultTimeout,
+            });
+            console.debug("Logout User response", response.data);
+            return response;
+        } catch (error) {
+            if (axios.isAxiosError(error)) {
+                console.error("Logout User error", error);
+
+                switch (error.response?.status) {
+                    case HttpStatusCode.NotAcceptable:
+                        return error.response;
+                    default:
+                        return this.serverErrorResponse;
+                }
+            } else {
+                console.error("Une erreur inattendue s'est produite", error);
+                return this.serverErrorResponse;
+            }
+        }
+    }
+
+    async getCurrentUser(): Promise<AxiosResponse> {
+        try {
+            // Get the CSRF token from the cookie
+            // const cookie = (await cookies()).get("XSRF-TOKEN")
+            const response = await axios.get(`${this.host}/auth/me`, {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                withCredentials: true,
+                timeout: this.defaultTimeout,
+            });
+            console.log("Get Current User response", response.data);
+            return response;
+        } catch (error) {
+            if (axios.isAxiosError(error)) {
+                console.error("Get Current User error", error);
+
+                switch (error.response?.status) {
+                    case HttpStatusCode.NotAcceptable:
+                        return error.response;
+                    default:
+                        return this.serverErrorResponse;
+                }
+            } else {
+                console.error("Une erreur inattendue s'est produite", error);
+                return this.serverErrorResponse;
+            }
+        }
+    }
+
     /**
      * Send login request to the backend.
-     * @param payload
+     * @param formData
      */
-    async login(payload: { email: string; motDePasse: string; }): Promise<AxiosResponse> {
+    async login(formData: FormData): Promise<AxiosResponse> {
+
         try {
+            const payload: any = {
+                email: formData.get("email"),
+                password: formData.get("password"),
+            }
             const response = await axios.post(`${this.host}/auth/login`, payload, {
                 headers: {
                     'Content-Type': 'application/json',
                 },
+                withCredentials: true,
                 timeout: this.defaultTimeout,
             });
-
-            console.debug("login response", response.data);
+            // print the response headers
+            console.log("response headers", response.headers);
+            console.log("login response", response.data);
             return response;
         } catch (error) {
             if (axios.isAxiosError(error)) {
@@ -47,17 +113,24 @@ class ApiClient {
 
     /**
      * Send register request to the backend.
-     * @param payload
+     * @param formData
      */
-    async register(payload: { email: string; motDePasse: string; }): Promise<AxiosResponse> {
+    async register(formData: FormData): Promise<AxiosResponse> {
         try {
+            const payload: any = {
+                firstname: formData.get("firstname"),
+                lastname: formData.get("lastname"),
+                email: formData.get("email"),
+                phone: formData.get("phone"),
+                password: formData.get("password"),
+            }
+            console.log("api client payload = ", payload);
             const response = await axios.post(`${this.host}/auth/register`, payload, {
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 timeout: this.defaultTimeout,
             });
-
             console.debug("register response", response.data);
             return response;
         } catch (error) {
@@ -88,8 +161,7 @@ class ApiClient {
             title: formData.get("title"),
             description: formData.get("description"),
             location: formData.get("location"),
-            currency: formData.get("currency"),
-            country: formData.get("country"),
+            cityId: formData.get("city"),
             startDate: formData.get("startDate"),
             endDate: formData.get("endDate"),
             organizerId: 1,
