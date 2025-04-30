@@ -16,6 +16,29 @@ public class ReservationDAO extends AbstractJpaDAO<Long, Reservation> {
     }
 
     /**
+     * Retrieves a Reservation entity by the event ID.
+     *
+     * @param id the ID of the reservation to retrieve
+     * @return the Reservation entity with the specified ID
+     */
+    public Reservation findByEventId(Long id) {
+        TypedQuery<Reservation> q = entityManager.createQuery("select r from Reservation r WHERE r.pass.event.id = :id", Reservation.class);
+        return q.setParameter("id", id).getSingleResult();
+    }
+
+    /**
+     * Retrieves a Reservation entity by the user ID.
+     *
+     * @param id the ID of the reservation to retrieve
+     * @return the Reservation entity with the specified ID
+     */
+    public Reservation findByUserId(Long id) {
+        TypedQuery<Reservation> q = entityManager.createQuery("select r from Reservation r WHERE r.user.id = :id", Reservation.class);
+        return q.setParameter("id", id).getSingleResult();
+    }
+
+
+    /**
      * Retrieves a Map of Number of reservation by Day.
      * All the successful reservations for a given event are counted.
      *

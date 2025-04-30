@@ -27,6 +27,7 @@ import jakarta.ws.rs.ApplicationPath;
 import jakarta.ws.rs.core.Application;
 import jakarta.ws.rs.ext.ContextResolver;
 import jakarta.ws.rs.ext.Provider;
+import rest.auth.AuthFilter;
 import rest.resources.*;
 
 @ApplicationPath("/")
@@ -60,7 +61,10 @@ public class WebApp extends Application {
         clazzes.add(CityResource.class);
         clazzes.add(EventResource.class);
         clazzes.add(AuthResource.class);
+        clazzes.add(PassResource.class);
+        clazzes.add(ReservationResource.class);
         clazzes.add(SwaggerResource.class);
+        clazzes.add(AuthFilter.class);
         clazzes.add(CorsFilter.class);
 //        clazzes.add(AcceptHeaderOpenApiResource.class);
 

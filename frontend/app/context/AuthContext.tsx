@@ -13,12 +13,7 @@ export const AuthProvider = ({ children }: any) => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        getCurrentUserAction()
-            .then(res => res.success ? res.data : null)
-            .then(data => {
-                setUser(data?.user || null);
-                setLoading(false);
-            });
+
     }, []);
 
     const logout = async () => {

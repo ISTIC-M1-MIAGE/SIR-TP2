@@ -1,12 +1,10 @@
-import type {GetServerSideProps, Metadata} from "next";
+import type {Metadata} from "next";
 import {Funnel_Display} from "next/font/google";
 import "./globals.css";
 import {Providers} from "@/app/providers";
-import {ReactNode} from "react";
 import CustomNavbar from "@/components/CustomNavbar";
 import Footer from "@/components/layouts/Footer";
-import axios from "axios";
-import User from "@/models/user";
+import {ReactNode} from "react";
 
 const funnelDisplay = Funnel_Display({
     variable: "--font-funnel-display",
@@ -21,8 +19,8 @@ export const metadata: Metadata = {
 
 export default function RootLayout({children}: Readonly<{ children: ReactNode }>) {
     return (
-        <html lang="fr">
-        <body className={` light antialiased`}>
+        <html lang="fr" suppressHydrationWarning={true}>
+        <body className={` light antialiased`} suppressHydrationWarning={true}>
         <CustomNavbar/>
         <Providers>
             {children}

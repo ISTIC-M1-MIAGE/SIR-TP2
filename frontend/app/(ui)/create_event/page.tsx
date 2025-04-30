@@ -93,15 +93,6 @@ export default function Page() {
 
                 <div className="flex flex-col w-full h-full mt-5">
                     <Form
-                        /*action={(data) => {
-                        data.set('location',`${location.adresse},${location.postal} ${location.ville}`);
-                        data.set('organizerId', "1");
-                        console.log("formData = ", data);
-                        formAction(data);
-                    }}
-
-                         */
-
                         action={formAction}
                         validationBehavior="aria"
                         className="flex w-full h-full"

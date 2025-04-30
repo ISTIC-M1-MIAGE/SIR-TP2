@@ -1,5 +1,7 @@
 package entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import dto.EventDTOin;
 import enums.EventState;
 import jakarta.persistence.*;
@@ -35,12 +37,15 @@ public class Event implements Serializable {
     private LocalDateTime endDate;
 
     @ManyToOne(targetEntity = City.class, fetch = FetchType.LAZY)
+    @JsonBackReference
     private City city;
 
     @ManyToOne(targetEntity = User.class, fetch = FetchType.LAZY)
+    @JsonBackReference
     private User organizer;
 
     @OneToMany(targetEntity = Pass.class, mappedBy = "event", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+    @JsonManagedReference
     private List<Pass> passes = new ArrayList<>();
 
     @Column(name = "state", nullable = false)

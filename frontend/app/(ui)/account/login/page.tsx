@@ -2,10 +2,11 @@
 import {Form} from "@heroui/form";
 import {Button, Input} from "@heroui/react";
 import {useActionState, useEffect, useState} from "react";
-import {registerAction} from "@/app/actions/registerAction";
 import {baseFormActionResponse} from "@/app/utils/constants";
 import {redirect} from "next/navigation";
 import {loginAction} from "@/app/actions/loginAction";
+import ToastHelper from "@/app/helpers/toastHelper";
+import {fromJSON} from "postcss";
 
 export default function Page() {
     const [formData, setFormData] = useState({
@@ -17,9 +18,14 @@ export default function Page() {
 
     useEffect(() => {
         if (state.success) {
-            //redirect("/account/profile");
+            if (typeof window !== "undefined") {
+
+                localStorage.setItem('jwt_token', state.data.token);
+                // ToastHelper.successToast(entity)
+            }
+            redirect("/account/profile");
         } else {
-            //ToastHelper.errorToast(state.message.title);
+            ToastHelper.errorToast(state.message.title);
         }
     }, [state])
     return (

@@ -1,5 +1,6 @@
 package entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -38,6 +39,7 @@ public class User implements Serializable {
     private String resetToken;
 
     @OneToMany(mappedBy = "organizer", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+    @JsonManagedReference
     private List<Event> events = new ArrayList<>();
 
     @Column(name = "created_at", nullable = false)

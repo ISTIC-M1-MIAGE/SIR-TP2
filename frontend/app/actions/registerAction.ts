@@ -20,6 +20,6 @@ export async function registerAction(prevState: any, formData: FormData) {
     if (response.status === HttpStatusCode.Ok) {
         return ActionHelper.successResponse({title: "Inscription réussie"}, response.data);
     } else {
-        return ActionHelper.defaultResponse({title: response.data.message});
+        return ActionHelper.defaultResponse({title: "Echec de l'inscription"});
     }
 }

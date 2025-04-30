@@ -1,5 +1,7 @@
 package entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -27,9 +29,11 @@ public class Pass implements Serializable {
     private String advantages;
 
     @ManyToOne(targetEntity = Event.class, fetch = FetchType.LAZY)
+    @JsonBackReference
     private Event event;
 
-    @OneToMany(targetEntity = Reservation.class, mappedBy = "pass", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "pass", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+    @JsonManagedReference
     private List<Reservation> reservation = new ArrayList<>();
 
     @Column(name = "old_price", nullable = false)
@@ -46,6 +50,13 @@ public class Pass implements Serializable {
 
 
     public Pass() {
+    }
+
+    public Pass(String name, double price,String advantages, Event event) {
+        this.name = name;
+        this.price = price;
+        this.advantages = advantages;
+        this.event = event;
     }
 
     public Pass(String name, double price, Event event) {

@@ -1,5 +1,6 @@
 package entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -23,7 +24,8 @@ public class City implements Serializable {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @OneToMany(targetEntity = Event.class, mappedBy = "city", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "city", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+    @JsonManagedReference
     private List<Event> events = new ArrayList<>();
 
     @Column(name = "created_at", nullable = false)

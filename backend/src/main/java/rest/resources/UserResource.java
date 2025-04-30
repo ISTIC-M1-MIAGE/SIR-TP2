@@ -2,6 +2,7 @@ package rest.resources;
 
 import dao.UserDAO;
 import entities.User;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
@@ -15,6 +16,8 @@ public class UserResource {
 
     @GET
     @Path("/{userId}")
+    @Operation(summary = "Get user by ID", description = "Returns a single user based on the provided ID")
+    @Parameter(description = "ID of the user to retrieve", required = true)
     @Produces(MediaType.APPLICATION_JSON)
     public Response getUserById(@PathParam("userId") Long userId) {
         User user = userDAO.findOne(userId);
@@ -27,6 +30,8 @@ public class UserResource {
 
     @POST
     @Consumes("application/json")
+    @Operation(summary = "Create a new user", description = "Adds a new user to the store")
+    @Parameter(description = "User object that needs to be added to the store", required = true)
     public Response addUser(
             @Parameter(description = "User object that needs to be added to the store", required = true) User user) {
         // add user

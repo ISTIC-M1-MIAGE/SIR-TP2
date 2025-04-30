@@ -19,6 +19,6 @@ export async function getCurrentUserAction() {
     if (response.status === HttpStatusCode.Ok) {
         return ActionHelper.successResponse({title: "User fetch réussie"}, response.data);
     } else {
-        return ActionHelper.defaultResponse({title: response.data.message});
+        return ActionHelper.defaultResponse({title: "Echec de la récupération de l'utilisateur"});
     }
 }

@@ -83,13 +83,55 @@ effectuer des requêtes.
 
 Retrouver la liste des endpoints dans la prochaine section grâce à notre intégration de swagger.
 
-### 5. Documentation swagger
+### 5. Les DTOs
+Nous avons mis en place des DTOs pour faciliter la communication entre le front et le back.
+Nous avons créé un package **dto** dans le dossier **backend/src/main/java** qui contient les classes de DTOs.
+Nous avons créé un DTO pour chaque entité de la base de données. Ces DTOs contiennent uniquement les attributs nécessaires
+pour le front et sont utilisés pour la sérialisation et la désérialisation des données.
+
+### 6. Les DAO
+Nous avons également créé un package **dao** dans le dossier **backend/src/main/java** qui contient les classes de DAO.
+Ces classes contiennent les méthodes pour accéder aux données de la base de données. Nous avons créé un DAO pour chaque
+entité de la base de données. Ces DAO sont utilisés pour effectuer des opérations CRUD sur les entités de la base de
+données.
+
+### 7. Les CORS
+Nous avons mis en place des CORS pour permettre au front de communiquer avec le back. Nous avons utilisé la
+bibliothèque **cors** pour gérer les CORS. Nous avons configuré les CORS dans la classe [CorsFilter](backend/src/main/java/rest/CorsFilter.java)
+qui est exécutée avant chaque requête. Nous avons autorisé toutes les origines, tous les headers et toutes les méthodes
+pour simplifier le développement. Il est possible de restreindre les origines, les headers et les méthodes en
+modifiant la classe [CorsFilter](backend/src/main/java/rest/CorsFilter.java).
+
+### 8. Authentification
+Nous avons mis en place une authentification basique pour sécuriser l'accès à l'API REST. Nous avons utilisé la
+bibliothèque **spring-security-crypto** pour gérer le cryptage des mots de passe. Nous avons créé un filtre d'authentification
+qui est executé avant chacune des requêtes portant l'annnotation **@Secured**. Ce filtre vérifie si l'utilisateur est
+authentifié et s' il a le rôle requis pour accéder à la ressource. Si l'utilisateur n'est pas authentifié, il est redirigé
+vers la page de connexion.
+Nous avons également créé une page de connexion qui permet à l'utilisateur de se connecter avec son email d'utilisateur et 
+son mot de passe. Cette page est accessible via l'url http://localhost:3000/auth/login et devrait être redirigée vers la page
+profil une fois l'utilisateur connecté. Mais pour le moment, nous n'avons pas encore mis en place la récupération du token après la connexion
+et la bonne redirection vers la page profil.
+
+
+
+### 7. Lancer le projet front
+Pour le front, nous avons utilisé React plus précisément son framework NextJS 
+Il faut donc installer NodeJS sur votre machine et ensuite lancer la commande suivante dans le dossier **frontend** :
+
+```
+npm install
+```
+Puis, pour lancer le projet, il suffit de faire :
+
+```
+npm run dev
+```
+Le projet se lance à l'adresse http://localhost:3000/
+
+### 8. Documentation swagger
 
 Lorsque l'API REST est lancée, il suffit d'aller à l'url http://localhost:8080/swagger/ pour voir s'afficher la
 documentation.
 
-## Les prochaines étapes
 
-- Compléter nos DAOs avec des fonctions utiles pour le front
-- Rajouter des DTOs
-- Travailler sur la partie front

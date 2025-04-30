@@ -4,6 +4,7 @@ import axios from "axios";
 import User from "@/models/user";
 import {useEffect, useState} from "react";
 import {getCurrentUserAction} from "@/app/actions/getCurrentUserAction";
+import ToastHelper from "@/app/helpers/toastHelper";
 
 export default function Page() {
     // user state
@@ -16,8 +17,8 @@ export default function Page() {
                     setUser(User.fromJson(response.data))
                 }
             ).catch((error) => {
-                console.error('Error fetching user data:', error
-         )
+                console.error('Error fetching user data:', error)
+                ToastHelper.errorToast("Failed to fetch user data")
             })
          }, []);
 

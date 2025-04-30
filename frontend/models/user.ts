@@ -4,7 +4,7 @@ export default class User {
         public firstName: string,
         public lastName: string,
         public email: string,
-        public phoneNumber: string,
+        public phone: string,
         public isAdmin: boolean,
     ) {
     }
@@ -15,7 +15,7 @@ export default class User {
             json.firstName,
             json.lastName,
             json.email,
-            json.phoneNumber,
+            json.phone,
             json.isAdmin,
         );
     }

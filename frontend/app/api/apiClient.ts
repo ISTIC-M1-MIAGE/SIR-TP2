@@ -1,9 +1,8 @@
 import axios, {AxiosResponse, HttpStatusCode} from 'axios';
-import {cookies} from "next/headers";
+import {createAxiosInstance} from "@/app/utils/axios";
 
 class ApiClient {
-    private readonly host = "http://127.0.0.1:8080";
-    private readonly defaultTimeout = 5000;
+    private readonly axiosInstance = createAxiosInstance();
     private readonly serverErrorResponse = {
         status: 500,
         statusText: "Failed API call",
@@ -16,13 +15,7 @@ class ApiClient {
 
     async logout(): Promise<AxiosResponse> {
         try {
-            const response = await axios.get(`${this.host}/auth/logout`, {
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                withCredentials: true,
-                timeout: this.defaultTimeout,
-            });
+            const response = await this.axiosInstance.get(`/auth/logout`);
             console.debug("Logout User response", response.data);
             return response;
         } catch (error) {
@@ -44,27 +37,13 @@ class ApiClient {
 
     async getCurrentUser(): Promise<AxiosResponse> {
         try {
-            // Get the CSRF token from the cookie
-            // const cookie = (await cookies()).get("XSRF-TOKEN")
-            const response = await axios.get(`${this.host}/auth/me`, {
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                withCredentials: true,
-                timeout: this.defaultTimeout,
-            });
+            const response = await this.axiosInstance.get(`/auth/me`);
             console.log("Get Current User response", response.data);
             return response;
         } catch (error) {
             if (axios.isAxiosError(error)) {
                 console.error("Get Current User error", error);
-
-                switch (error.response?.status) {
-                    case HttpStatusCode.NotAcceptable:
-                        return error.response;
-                    default:
-                        return this.serverErrorResponse;
-                }
+                return error.response?.data;
             } else {
                 console.error("Une erreur inattendue s'est produite", error);
                 return this.serverErrorResponse;
@@ -83,31 +62,11 @@ class ApiClient {
                 email: formData.get("email"),
                 password: formData.get("password"),
             }
-            const response = await axios.post(`${this.host}/auth/login`, payload, {
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                withCredentials: true,
-                timeout: this.defaultTimeout,
-            });
             // print the response headers
-            console.log("response headers", response.headers);
-            console.log("login response", response.data);
-            return response;
-        } catch (error) {
-            if (axios.isAxiosError(error)) {
-                console.error("login error", error);
-
-                switch (error.response?.status) {
-                    case HttpStatusCode.NotAcceptable:
-                        return error.response;
-                    default:
-                        return this.serverErrorResponse;
-                }
-            } else {
-                console.error("Une erreur inattendue s'est produite", error);
-                return this.serverErrorResponse;
-            }
+            return await this.axiosInstance.post(`/auth/login`, payload);
+        } catch (error: any) {
+            console.error("login error", error);
+            return error;
         }
     }
 
@@ -125,12 +84,7 @@ class ApiClient {
                 password: formData.get("password"),
             }
             console.log("api client payload = ", payload);
-            const response = await axios.post(`${this.host}/auth/register`, payload, {
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                timeout: this.defaultTimeout,
-            });
+            const response = await this.axiosInstance.post(`/auth/register`, payload);
             console.debug("register response", response.data);
             return response;
         } catch (error) {
@@ -147,6 +101,27 @@ class ApiClient {
                 console.error("Une erreur inattendue s'est produite", error);
                 return this.serverErrorResponse;
             }
+        }
+    }
+
+    async createPass(formData: FormData): Promise<AxiosResponse> {
+        // create the right payload
+        const payload: any = {
+            id: 0,
+            eventId: formData.get("eventId"),
+            name: formData.get("name"),
+            price: formData.get("price"),
+            advantages: formData.get("advantages"),
+        }
+        console.log("api client payload = ", payload);
+        try {
+            const response = await this.axiosInstance.post(`/pass`, payload);
+
+            console.debug("createPass response", response.data);
+            return response;
+        } catch (error) {
+            console.error("createPass error", error);
+            return this.serverErrorResponse;
         }
     }
 
@@ -169,12 +144,7 @@ class ApiClient {
         }
         console.log("api client payload = ", payload);
         try {
-            const response = await axios.post(`${this.host}/event`, payload, {
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                timeout: this.defaultTimeout,
-            });
+            const response = await this.axiosInstance.post(`/event`, payload);
 
             console.debug("createEvent response", response.data);
             return response;
@@ -189,12 +159,7 @@ class ApiClient {
      */
     async getEvents(): Promise<AxiosResponse> {
         try {
-            const response = await axios.get(`${this.host}/event`, {
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                timeout: this.defaultTimeout,
-            });
+            const response = await this.axiosInstance.get(`/event`);
 
             console.debug("getEvents response =", response.data);
             return response;
@@ -210,12 +175,7 @@ class ApiClient {
      */
     async getEventById(id: number): Promise<AxiosResponse> {
         try {
-            const response = await axios.get(`${this.host}/event/${id}`, {
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                timeout: this.defaultTimeout,
-            });
+            const response = await this.axiosInstance.get(`/event/${id}`);
 
             console.debug("getEventById response =", response.data);
             return response;
@@ -232,12 +192,7 @@ class ApiClient {
     async searchEvents(formData: FormData): Promise<AxiosResponse> {
         const searchPath = formData.keys().map(key => `${key}=${formData.get(key)}`).toArray().join("&");
         try {
-            const response = await axios.get(`${this.host}/event/search?${searchPath}`, {
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                timeout: this.defaultTimeout,
-            });
+            const response = await this.axiosInstance.get(`/event/search?${searchPath}`);
 
             console.debug("searchEvents response =", response.data);
             return response;
@@ -252,17 +207,28 @@ class ApiClient {
      */
     async getCities(): Promise<AxiosResponse> {
         try {
-            const response = await axios.get(`${this.host}/city`, {
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                timeout: this.defaultTimeout,
-            });
+            const response = await this.axiosInstance.get(`/city`);
 
             console.debug("getCities response =", response.data);
             return response;
         } catch (error) {
             console.log("getCities error =", error);
+            return this.serverErrorResponse;
+        }
+    }
+
+    /**
+     * Get the list of passes for a specific event.
+     * @param eventId The ID of the event to get passes for.
+     */
+    async getPassesByEvent(eventId: number): Promise<AxiosResponse> {
+        try {
+            const response = await this.axiosInstance.get(`/event/${eventId}/passes`);
+
+            console.debug("getPassesByEvent response =", response.data);
+            return response;
+        } catch (error) {
+            console.log("getPassesByEvent error =", error);
             return this.serverErrorResponse;
         }
     }

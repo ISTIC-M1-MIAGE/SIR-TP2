@@ -17,8 +17,10 @@ export async function loginAction(prevState: any, formData: FormData) {
     const response = await apiClient.login(formData);
 
     if (response.status === HttpStatusCode.Ok) {
+        // Store token into localStorage
+       // const {entity, token } = response.data;
         return ActionHelper.successResponse({title: "Connexion réussie"}, response.data);
     } else {
-        return ActionHelper.defaultResponse({title: response.data.message});
+        return ActionHelper.defaultResponse({title: "Echec de la connexion"});
     }
 }

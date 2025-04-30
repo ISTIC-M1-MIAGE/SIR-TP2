@@ -1,5 +1,6 @@
 package entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import enums.PurchaseStateEnum;
 import jakarta.persistence.*;
 
@@ -17,11 +18,11 @@ public class Reservation implements Serializable {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
+    @JsonBackReference
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "pass_id")
+    @JsonBackReference
     private Pass pass;
 
     @Column(name = "scan_date")

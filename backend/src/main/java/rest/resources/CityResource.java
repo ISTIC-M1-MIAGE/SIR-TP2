@@ -9,6 +9,7 @@ import dto.EventDTOout;
 import entities.City;
 import entities.Event;
 import entities.User;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
@@ -23,6 +24,7 @@ public class CityResource {
 
     @GET
     @Path("/")
+    @Operation(summary = "Get all cities")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getCities() {
         List<City> cities = cityDAO.findAll();
